@@ -61,10 +61,6 @@
     ],
     "interface-over-type-literal": false,
     "label-position": true,
-    "linebreak-style": [
-      true,
-      "CRLF"
-    ],
     "max-classes-per-file": false,
     "max-line-length": [
       true,

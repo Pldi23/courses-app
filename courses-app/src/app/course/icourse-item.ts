@@ -1,7 +1,7 @@
 export interface ICourseItem {
-  creationDate: string;
+  creationDate: Date;
   description: string;
-  duration: string;
+  duration: number;
   id: number;
   title: string;
 }
