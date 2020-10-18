@@ -1,22 +1,40 @@
 <div class="card">
   <div class="card-header">
-    {{courseItem.title}}
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h5 class="card-text">{{courseItem.title}}</h5>
+        </div>
+        <div class="col-sm">
+          <p>
+            <small>
+              <img src="/assets/clock.svg" width="20" height="20" alt="clock"> {{courseItem.duration}} min
+              &nbsp;
+              <img src="/assets/calendar.svg" width="20" height="20" alt="calendar"> {{courseItem.creationDate | date}}
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="card-body">
-    <p class="card-title">
-      {{courseItem.duration}} min
-    </p>
-    <h5 class="card-text">
-      {{courseItem.description}}
-    </h5>
-    <p class="card-text">
-      {{courseItem.creationDate}}
-    </p>
-    <a href="#" class="btn btn-primary">
-      Go somewhere
-    </a>
-    <a href="#" class="btn btn-primary">
-      Go somewhere
-    </a>
+    <div class="container">
+      <div class="row">
+        <div class="col-9">
+          <p>
+            {{courseItem.description}}
+          </p>
+        </div>
+        <div class="col-3">
+          <div class="row">
+            <button type="button" class="btn btn-info btn-sm"><img src="/assets/edit.svg" width="20" height="20" alt="edit"> Edit
+            </button>
+            &nbsp;
+            <button type="button" class="btn btn-info btn-sm" (click)="delete.emit(courseItem)"><img src="/assets/delete.svg" width="20" height="20" alt="delete"> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
