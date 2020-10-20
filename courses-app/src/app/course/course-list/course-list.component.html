@@ -2,8 +2,7 @@
   <br>
   <div class="container">
     <div class="input-group mb-3 col-3">
-      <input [(ngModel)]="searchText" type="text" class="form-control fontAwesome" placeholder="&#xF002; text to search"
-             aria-describedby="basic-addon2">
+      <input [(ngModel)]="searchText" type="text" class="form-control fontAwesome" placeholder="&#xF002; text to search">
       <br>
       <div class="input-group-append">
         &nbsp;
@@ -16,10 +15,10 @@
       </button>
     </div>
     <br>
-    <a *ngFor="let courseItem of coursesList">
+    <div *ngFor="let courseItem of coursesList">
       <app-courses-item [courseItem]="courseItem" (delete)="handleDelete($event)"></app-courses-item>
       <br>
-    </a>
+    </div>
     <div class="card">
       <div class="card-body">
         <div class="col text-md-center">

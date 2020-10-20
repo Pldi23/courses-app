@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-breadcrumbs',
-  templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.css'],
+  	selector: 'app-breadcrumbs',
+  	templateUrl: './breadcrumb.component.html',
+  	styleUrls: ['./breadcrumb.component.css'],
 })
 export class BreadcrumbComponent implements OnInit {
 
-  constructor() { }
+  	constructor() { }
 
-  public ngOnInit(): void {
-  }
+  	public ngOnInit(): void {
+  	}
 
 }
