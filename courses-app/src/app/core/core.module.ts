@@ -6,14 +6,14 @@ import { HeaderComponent } from './header/header.component';
 import { LogoComponent } from './logo/logo.component';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, BreadcrumbComponent, LogoComponent],
-  exports: [
-	HeaderComponent,
-	FooterComponent,
-	BreadcrumbComponent,
-  ],
-  imports: [
-	CommonModule,
-  ],
+  	declarations: [HeaderComponent, FooterComponent, BreadcrumbComponent, LogoComponent],
+  	exports: [
+		HeaderComponent,
+		FooterComponent,
+		BreadcrumbComponent,
+  	],
+  	imports: [
+		CommonModule,
+  	],
 })
 export class CoreModule { }
