@@ -1,4 +1,11 @@
 .fontAwesome {
+  	font-family: 'SourceSansPro-Regular', FontAwesome, sans-serif;
+}
+
+.containerBackgroung {
+  	background-color: ghostwhite;
+}
+.fontAwesome {
   font-family: 'SourceSansPro-Regular', FontAwesome, sans-serif;
 }
 
