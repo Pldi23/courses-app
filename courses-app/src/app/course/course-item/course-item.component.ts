@@ -15,5 +15,8 @@ export class CourseItemComponent implements OnInit {
 
 	public ngOnInit(): void {
 	}
+	public edit(): void {
+		console.log('edit clicked');
+	}
 
 }
