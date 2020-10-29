@@ -6,7 +6,7 @@
       <br>
       <div class="input-group-append">
         &nbsp;
-        <button class="btn btn-success" type="button" (click)="search()">Search</button>
+        <button class="btn btn-success" type="button" (click)="search()" id="searchButton">Search</button>
       </div>
     </div>
     <div class="col text-right">
@@ -16,13 +16,13 @@
     </div>
     <br>
     <div *ngFor="let courseItem of coursesList">
-      <app-courses-item [courseItem]="courseItem" (delete)="handleDelete($event)"></app-courses-item>
+      <app-courses-item id="itemId" [courseItem]="courseItem" (delete)="handleDelete($event)"></app-courses-item>
       <br>
     </div>
     <div class="card">
       <div class="card-body">
         <div class="col text-md-center">
-          <button type="button" class="btn btn-link" (click)="fetchMore()">
+          <button type="button" class="btn btn-link" id="loadMoreButton" (click)="fetchMore()">
             Load more
           </button>
         </div>
