@@ -3,6 +3,7 @@ import {
   	Input,
   	OnInit,
 } from '@angular/core';
+import {FilterByTitlePipe} from '../../pipe/filter/filter-by-title.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemsService } from '../course-items.service';
 
@@ -36,9 +37,10 @@ export class CourseListComponent implements OnInit {
   	public search(): void {
 		console.log('search click');
 		if (this.searchText != undefined) {
-		this.coursesList = this.courseService.fetchAll()
-			.filter((course: CourseItem): boolean => course.title.toLowerCase().includes(this.searchText.trim().toLowerCase()));
-		this.searchText = null;
+			const filterByTitlePipe: FilterByTitlePipe = new FilterByTitlePipe();
+			const items: CourseItem[] = this.courseService.fetchAll();
+			this.coursesList = filterByTitlePipe.transform(items, this.searchText);
+			this.searchText = null;
 		}
   	}
 

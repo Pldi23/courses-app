@@ -1,15 +1,18 @@
-<div class="card">
+<div class="card" [appCourseCreationDateBorder]="courseItem.creationDate" [ngClass]="{topRated: courseItem.topRated}">
   <div class="card-header">
     <div class="container">
       <div class="row">
-        <div class="col-sm">
-          <h5 class="card-text">{{courseItem.title}}</h5>
+        <div class="col-sm row">
+          <h5 class="card-text">{{courseItem.title | uppercase}}</h5>
+		  <div *ngIf="courseItem.topRated" class="col-sm fontAwesome">
+			  &#xF005;
+		  </div>
         </div>
         <div class="col-sm">
             <small>
-              <img src="/assets/clock.svg" width="20" height="20" alt="clock"> {{courseItem.duration}} min
+              <img src="/assets/clock.svg" width="20" height="20" alt="clock"> {{courseItem.duration | courseDuration}}
               &nbsp;
-              <img src="/assets/calendar.svg" width="20" height="20" alt="calendar"> {{courseItem.creationDate | date}}
+              <img src="/assets/calendar.svg" width="20" height="20" alt="calendar"> {{courseItem.creationDate | date: 'd MMM, y'}}
             </small>
         </div>
       </div>
