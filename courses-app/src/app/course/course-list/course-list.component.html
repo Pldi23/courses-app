@@ -15,7 +15,10 @@
       </button>
     </div>
     <br>
-    <div *ngFor="let courseItem of coursesList">
+	  <div *ngIf="coursesList.length === 0" class="alert alert-light text-md-center" role="alert">
+		  No Data. Feel free to add new course
+	  </div>
+    <div *ngFor="let courseItem of coursesList | orderByCreationDate">
       <app-courses-item id="itemId" [courseItem]="courseItem" (delete)="handleDelete($event)"></app-courses-item>
       <br>
     </div>

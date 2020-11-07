@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {OrderByCreationDatePipe} from '../../pipe/order/order-by-creation-date.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemsService } from '../course-items.service';
 import { CourseListComponent } from './course-list.component';
@@ -16,6 +17,7 @@ describe('CourseListComponent', (): void => {
 					creationDate: new Date(2020, 2, 2),
 					duration: 90,
 					description: 'desc',
+					topRated: true,
 				},
 			];
 		},
@@ -27,6 +29,7 @@ describe('CourseListComponent', (): void => {
 					creationDate: new Date(2020, 2, 2),
 					duration: 95,
 					description: 'desc',
+					topRated: true,
 				},
 				{
 					id: 3,
@@ -34,6 +37,7 @@ describe('CourseListComponent', (): void => {
 					creationDate: new Date(2020, 2, 2),
 					duration: 29,
 					description: 'desc',
+					topRated: true,
 				},
 			];
 		},
@@ -41,7 +45,7 @@ describe('CourseListComponent', (): void => {
 
 	beforeEach(async (): Promise<void> => {
 		await TestBed.configureTestingModule({
-			declarations: [ CourseListComponent ],
+			declarations: [ CourseListComponent, OrderByCreationDatePipe ],
 			providers: [{ provide: CourseItemsService, useValue: serviceStub }],
 		})
 		.compileComponents();
@@ -62,18 +66,18 @@ describe('CourseListComponent', (): void => {
 		const consoleLogText: string = 'load more click';
 		const loadMoreButtonElement: any = fixture.nativeElement.querySelector('#loadMoreButton');
 		const dataSpy: any = spyOn(service, 'fetch');
-		spyOn(console, 'log');
+		const spy: any = spyOn(console, 'log');
 		loadMoreButtonElement.click();
-		expect(console.log).toHaveBeenCalledWith(consoleLogText);
+		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(dataSpy).toHaveBeenCalledWith(1, 4);
 	});
 
 	it('should load first 3 courses on init', (): void => {
 		const consoleLogText: string = 'Courses List on init';
 		const dataSpy: any = spyOn(service, 'fetch');
-		spyOn(console, 'log');
+		const spy: any = spyOn(console, 'log');
 		component.ngOnInit();
-		expect(console.log).toHaveBeenCalledWith(consoleLogText);
+		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(dataSpy).toHaveBeenCalledWith(0, 3);
 	});
 
@@ -82,9 +86,9 @@ describe('CourseListComponent', (): void => {
 		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
 		const dataSpy: any = spyOn(service, 'fetchAll');
 		component.searchText = 'text';
-		spyOn(console, 'log');
+		const spy: any = spyOn(console, 'log');
 		searchButtonElement.click();
-		expect(console.log).toHaveBeenCalledWith(consoleLogText);
+		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(dataSpy).toHaveBeenCalledWith();
 	});
 
@@ -92,18 +96,18 @@ describe('CourseListComponent', (): void => {
 		const consoleLogText: string = 'search click';
 		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
 		const dataSpy: any = spyOn(service, 'fetchAll');
-		spyOn(console, 'log');
+		const spy: any = spyOn(console, 'log');
 		searchButtonElement.click();
-		expect(console.log).toHaveBeenCalledWith(consoleLogText);
+		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(dataSpy).not.toHaveBeenCalledWith();
 	});
 
 	it('should delete item when list contain item', (): void => {
 		const consoleLogText: string = 'delete click';
 		const course: CourseItem = component.coursesList[0];
-		spyOn(console, 'log');
+		const spy: any = spyOn(console, 'log');
 		component.handleDelete(course);
-		expect(console.log).toHaveBeenCalledWith(consoleLogText);
+		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(component.coursesList).toEqual([]);
 	});
 
@@ -116,10 +120,11 @@ describe('CourseListComponent', (): void => {
 			creationDate: new Date(2020, 2, 2),
 			duration: 90,
 			description: 'ENGL',
+			topRated: true,
 		};
-		spyOn(console, 'log');
+		const spy: any = spyOn(console, 'log');
 		component.handleDelete(course);
-		expect(console.log).toHaveBeenCalledWith(consoleLogText);
+		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(component.coursesList).toEqual(expectedList);
 	});
 });

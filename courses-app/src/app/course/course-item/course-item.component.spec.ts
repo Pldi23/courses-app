@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {CourseDurationPipe} from '../../pipe/course-duration/course-duration.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemComponent } from './course-item.component';
 
@@ -12,11 +13,12 @@ describe('CourseItemComponent', (): void => {
 		duration: 90,
 		creationDate: new Date(2020, 0, 1),
 		description: 'description',
+		topRated: true,
 	};
 
 	beforeEach(async (): Promise<void> => {
 		await TestBed.configureTestingModule({
-			declarations: [ CourseItemComponent ],
+			declarations: [ CourseItemComponent, CourseDurationPipe ],
 		})
 		.compileComponents();
 	});
@@ -37,9 +39,9 @@ describe('CourseItemComponent', (): void => {
 		const courseDurationDateElement: any = fixture.nativeElement.querySelector('small');
 		const courseDescriptionElement: any = fixture.nativeElement.querySelector('p');
 
-		expect(courseTitleElement.textContent).toEqual('name');
-		expect(courseDurationDateElement.textContent).toContain(' 90 min');
-		expect(courseDurationDateElement.textContent).toContain('Jan 1, 2020');
+		expect(courseTitleElement.textContent).toEqual('NAME');
+		expect(courseDurationDateElement.textContent).toContain(' 1h 30min');
+		expect(courseDurationDateElement.textContent).toContain('1 Jan, 2020');
 		expect(courseDescriptionElement.textContent).toEqual(' description ');
 	});
 
@@ -57,10 +59,10 @@ describe('CourseItemComponent', (): void => {
 	it('should call console log when click edit button', (): void => {
 		const editButtonOnClickConsoleText: string = 'edit clicked';
 		const editButtonElement: any = fixture.nativeElement.querySelector('#editButton');
-		spyOn(console, 'log');
+		const spy: any = spyOn(console, 'log');
 		editButtonElement.click();
 
-		expect(console.log).toHaveBeenCalledWith(editButtonOnClickConsoleText);
+		expect(spy).toHaveBeenCalledWith(editButtonOnClickConsoleText);
 	});
 });
 
@@ -73,6 +75,7 @@ describe('Test CourseItemComponent using test host', (): void => {
 		creationDate: new Date(2020, 2, 2),
 		duration: 90,
 		description: 'description',
+		topRated: true,
 	};
 
 	// Create test host component for courses-item element
@@ -90,7 +93,7 @@ describe('Test CourseItemComponent using test host', (): void => {
 	}
 
 	beforeEach(async (): Promise<void> => {
-		await TestBed.configureTestingModule({declarations: [CourseItemComponent, TestHostComponent]}).compileComponents();
+		await TestBed.configureTestingModule({declarations: [CourseItemComponent, TestHostComponent, CourseDurationPipe]}).compileComponents();
 	});
 
 	beforeEach((): void => {
@@ -104,19 +107,26 @@ describe('Test CourseItemComponent using test host', (): void => {
 		const courseDurationDateElement: any = fixture.nativeElement.querySelector('small');
 		const courseDescriptionElement: any = fixture.nativeElement.querySelector('p');
 
-		expect(courseTitleElement.textContent).toEqual('name');
-		expect(courseDurationDateElement.textContent).toContain(' 90 min');
-		expect(courseDurationDateElement.textContent).toContain('Mar 2, 2020');
+		expect(courseTitleElement.textContent).toEqual('NAME');
+		expect(courseDurationDateElement.textContent).toContain(' 1h 30min');
+		expect(courseDurationDateElement.textContent).toContain('2 Mar, 2020');
 		expect(courseDescriptionElement.textContent).toEqual(' description ');
 	});
 
 	it('should emit course.id when clicking on delete button and call console.log with proper argument on host component', (): void => {
 		const deleteButtonElement: any = fixture.nativeElement.querySelector('#deleteButton');
 
-		spyOn(console, 'log');
+		const spy: any = spyOn(console, 'log');
 
 		deleteButtonElement.click();
 
-		expect(console.log).toHaveBeenCalledWith(`Course: ${course} was deleted!`);
+		expect(spy).toHaveBeenCalledWith(`Course: ${course} was deleted!`);
 	});
 });
+
+@Pipe({name: 'mockPipe'})
+class MockPipe implements PipeTransform {
+	public transform(minutes: number): string {
+		return 'mock data';
+	}
+}

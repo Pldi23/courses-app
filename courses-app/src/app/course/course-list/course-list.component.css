@@ -12,3 +12,8 @@
 .containerBackgroung {
   background-color: ghostwhite;
 }
+
+.noDataBorder {
+	border-width: medium;
+	border-color: #111111;
+}
