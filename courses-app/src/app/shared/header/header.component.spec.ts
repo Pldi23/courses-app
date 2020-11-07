@@ -11,6 +11,9 @@ describe('HeaderComponent', (): void => {
 		})
 		.compileComponents();
   	});
+  	afterEach((): void => {
+  		localStorage.removeItem('currentUser');
+	});
 
   	beforeEach((): void => {
 		fixture = TestBed.createComponent(HeaderComponent);
@@ -21,4 +24,11 @@ describe('HeaderComponent', (): void => {
   	it('should create', (): void => {
 		expect(component).toBeTruthy();
   	});
+  	it('should render username and logout when is authenticated', (): void => {
+  		localStorage.setItem('currentUser', 'name');
+		fixture.detectChanges();
+		const element: any = fixture.nativeElement.querySelector('#headerUserInfoSection');
+		expect(element.textContent).toContain('name');
+		expect(element.textContent).toContain('Log out');
+	});
 });

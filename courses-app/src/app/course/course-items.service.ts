@@ -18,9 +18,27 @@ export class CourseItemsService {
 
   	constructor() { }
 
-  	public fetchAll(): CourseItem[] {
+  	public getList(): CourseItem[] {
 		return this.courses;
   	}
+  	public create(course: CourseItem): void {
+  		this.courses.push(course);
+	}
+	public getById(id: number): CourseItem {
+  		return this.courses.find((course: CourseItem): boolean => course.id === id);
+	}
+	public update(course: CourseItem, id: number): CourseItem {
+  		const index: number = this.courses.findIndex((c: CourseItem): boolean => c.id === id);
+  		course.id = id;
+  		this.courses[index] = course;
+  		return course;
+	}
+	public remove(course: CourseItem): void {
+		const index: number = this.courses.indexOf(course, 0);
+		if (index > -1) {
+			this.courses.splice(index, 1);
+		}
+	}
 
   	public fetch(start: number, end: number): CourseItem[] {
 		return this.courses.slice(start, end);

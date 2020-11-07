@@ -1,4 +1,4 @@
-import {CourseItem} from '../../course/course-item';
+import { CourseItem } from '../../course/course-item';
 import { OrderByCreationDatePipe } from './order-by-creation-date.pipe';
 
 describe('OrderByCreationDatePipe', (): void => {

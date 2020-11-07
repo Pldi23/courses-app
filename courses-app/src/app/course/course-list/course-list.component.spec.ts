@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {OrderByCreationDatePipe} from '../../pipe/order/order-by-creation-date.pipe';
+import { OrderByCreationDatePipe } from '../../pipe/order/order-by-creation-date.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemsService } from '../course-items.service';
 import { CourseListComponent } from './course-list.component';
@@ -21,7 +21,7 @@ describe('CourseListComponent', (): void => {
 				},
 			];
 		},
-		fetchAll(): CourseItem[] {
+		getList(): CourseItem[] {
 			return [
 				{
 					id: 2,
@@ -40,6 +40,9 @@ describe('CourseListComponent', (): void => {
 					topRated: true,
 				},
 			];
+		},
+		remove(course: CourseItem): void {
+			console.log(course);
 		},
 	};
 
@@ -84,7 +87,7 @@ describe('CourseListComponent', (): void => {
 	it('should search items in list when search button clicked', (): void => {
 		const consoleLogText: string = 'search click';
 		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
-		const dataSpy: any = spyOn(service, 'fetchAll');
+		const dataSpy: any = spyOn(service, 'getList');
 		component.searchText = 'text';
 		const spy: any = spyOn(console, 'log');
 		searchButtonElement.click();
@@ -95,7 +98,7 @@ describe('CourseListComponent', (): void => {
 	it('should not search items in list when search button clicked but no text in input', (): void => {
 		const consoleLogText: string = 'search click';
 		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
-		const dataSpy: any = spyOn(service, 'fetchAll');
+		const dataSpy: any = spyOn(service, 'getList');
 		const spy: any = spyOn(console, 'log');
 		searchButtonElement.click();
 		expect(spy).toHaveBeenCalledWith(consoleLogText);
@@ -108,7 +111,7 @@ describe('CourseListComponent', (): void => {
 		const spy: any = spyOn(console, 'log');
 		component.handleDelete(course);
 		expect(spy).toHaveBeenCalledWith(consoleLogText);
-		expect(component.coursesList).toEqual([]);
+		expect(spy).toHaveBeenCalledWith(course);
 	});
 
 	it('should not delete item when list not contain item', (): void => {

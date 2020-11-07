@@ -14,13 +14,13 @@ describe('CourseItemsService', (): void => {
 		expect(service).toBeTruthy();
   	});
 
-	it('should fetch all data', (): void => {
-		const courseItems: CourseItem[] = service.fetchAll();
+	it('should get list', (): void => {
+		const courseItems: CourseItem[] = service.getList();
 		expect(courseItems).not.toBe(null);
 	});
 
 	it('should fetch limited data', (): void => {
 		const courseItems: CourseItem[] = service.fetch(0, 3);
-		expect(courseItems).not.toBe(null);
+		expect(courseItems.length).toBe(3);
 	});
 });

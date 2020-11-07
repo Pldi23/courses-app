@@ -31,7 +31,8 @@
             <button type="button" class="btn btn-info btn-sm" id="editButton" (click)="edit()"><img src="/assets/edit.svg" width="20" height="20" alt="edit"> Edit
             </button>
             &nbsp;
-            <button type="button" class="btn btn-info btn-sm" id="deleteButton" (click)="delete.emit(courseItem)"><img src="/assets/delete.svg" width="20" height="20" alt="delete"> Delete
+            <button type="button" class="btn btn-info btn-sm" id="deleteButton" (click)="showDialog()">
+			<img src="/assets/delete.svg" width="20" height="20" alt="delete"> Delete
             </button>
           </div>
         </div>
@@ -39,3 +40,9 @@
     </div>
   </div>
 </div>
+<app-modal [isShown]="modalIsShown">
+	<div id="modal" class="alert alert-warning" role="alert">Do you really want to delete this course?</div>
+	<button id="deleteModalButton" type="button" class="btn btn-danger" (click)="delete.emit(courseItem)">Yes</button>
+	&nbsp;
+	<button id="cancelDeleteButton" type="button" class="btn btn-info" (click)="closeDialog()">No</button>
+</app-modal>

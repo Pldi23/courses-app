@@ -1,0 +1,24 @@
+<nav class="navbar navbar-dark bg-dark">
+	<div class="container-fluid">
+    <span>
+      <app-logo></app-logo>
+      <span class="navbar-brand mb-0 h1">Video course</span>
+    </span>
+		<div *ngIf="isAuthenticated" id="headerUserInfoSection">
+			<ul class="nav justify-content-end">
+				<li class="nav-item">
+					<a class="nav-link text-light">
+						<img src="/assets/user.svg" width="25" height="25" alt="">
+						{{userName}}
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-light" href="#" (click)="logout()">
+						<img src="/assets/enter.svg" width="25" height="25" alt="">
+						Log out
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

@@ -1,6 +1,6 @@
 import { Component, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {CourseDurationPipe} from '../../pipe/course-duration/course-duration.pipe';
+import { CourseDurationPipe } from '../../pipe/course-duration/course-duration.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemComponent } from './course-item.component';
 
@@ -45,14 +45,29 @@ describe('CourseItemComponent', (): void => {
 		expect(courseDescriptionElement.textContent).toEqual(' description ');
 	});
 
-	it('should delete course item', (): void => {
+	it('should open modal window and then delete when click yes', (): void => {
 		let expectedCourseItem: CourseItem;
 		const deleteButtonElement: any = fixture.nativeElement.querySelector('#deleteButton');
 		component.delete.subscribe((): any => expectedCourseItem = courseItem);
 
 		deleteButtonElement.click();
+		const deleteModalButtonElement: any = fixture.nativeElement.querySelector('#deleteModalButton');
+		deleteModalButtonElement.click();
 
 		expect(expectedCourseItem).toEqual(courseItem);
+
+	});
+
+	it('should open modal window and then not delete when click no', (): void => {
+		let expectedCourseItem: CourseItem;
+		const deleteButtonElement: any = fixture.nativeElement.querySelector('#deleteButton');
+		component.delete.subscribe((): any => expectedCourseItem = courseItem);
+
+		deleteButtonElement.click();
+		const cancelDeleteButtonElement: any = fixture.nativeElement.querySelector('#cancelDeleteButton');
+		cancelDeleteButtonElement.click();
+
+		expect(expectedCourseItem).not.toEqual(courseItem);
 
 	});
 
@@ -111,16 +126,6 @@ describe('Test CourseItemComponent using test host', (): void => {
 		expect(courseDurationDateElement.textContent).toContain(' 1h 30min');
 		expect(courseDurationDateElement.textContent).toContain('2 Mar, 2020');
 		expect(courseDescriptionElement.textContent).toEqual(' description ');
-	});
-
-	it('should emit course.id when clicking on delete button and call console.log with proper argument on host component', (): void => {
-		const deleteButtonElement: any = fixture.nativeElement.querySelector('#deleteButton');
-
-		const spy: any = spyOn(console, 'log');
-
-		deleteButtonElement.click();
-
-		expect(spy).toHaveBeenCalledWith(`Course: ${course} was deleted!`);
 	});
 });
 
