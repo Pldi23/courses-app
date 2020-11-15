@@ -1,16 +1,13 @@
-import {
-  	Component,
-  	Input,
-  	OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FilterByTitlePipe } from '../../pipe/filter/filter-by-title.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemsService } from '../course-items.service';
 
 @Component({
-   selector: 'app-courses-list',
-   templateUrl: './course-list.component.html',
-   styleUrls: ['./course-list.component.css'],
+   	selector: 'app-courses-list',
+   	templateUrl: './course-list.component.html',
+   	styleUrls: ['./course-list.component.css'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseListComponent implements OnInit {
 

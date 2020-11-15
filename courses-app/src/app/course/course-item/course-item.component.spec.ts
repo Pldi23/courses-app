@@ -1,5 +1,6 @@
 import { Component, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { CourseDurationPipe } from '../../pipe/course-duration/course-duration.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemComponent } from './course-item.component';
@@ -15,10 +16,14 @@ describe('CourseItemComponent', (): void => {
 		description: 'description',
 		topRated: true,
 	};
+	const router: any = {
+		navigate: jasmine.createSpy('navigate'),
+	};
 
 	beforeEach(async (): Promise<void> => {
 		await TestBed.configureTestingModule({
 			declarations: [ CourseItemComponent, CourseDurationPipe ],
+			providers: [{ provide: Router, useValue: router }],
 		})
 		.compileComponents();
 	});
@@ -71,13 +76,11 @@ describe('CourseItemComponent', (): void => {
 
 	});
 
-	it('should call console log when click edit button', (): void => {
-		const editButtonOnClickConsoleText: string = 'edit clicked';
+	it('should call navigate to course page when click edit button', (): void => {
 		const editButtonElement: any = fixture.nativeElement.querySelector('#editButton');
-		const spy: any = spyOn(console, 'log');
 		editButtonElement.click();
 
-		expect(spy).toHaveBeenCalledWith(editButtonOnClickConsoleText);
+		expect(router.navigate).toHaveBeenCalledWith([`/courses/${courseItem.id}`]);
 	});
 });
 
@@ -91,6 +94,9 @@ describe('Test CourseItemComponent using test host', (): void => {
 		duration: 90,
 		description: 'description',
 		topRated: true,
+	};
+	const router: any = {
+		navigate: jasmine.createSpy('navigate'),
 	};
 
 	// Create test host component for courses-item element
@@ -108,7 +114,10 @@ describe('Test CourseItemComponent using test host', (): void => {
 	}
 
 	beforeEach(async (): Promise<void> => {
-		await TestBed.configureTestingModule({declarations: [CourseItemComponent, TestHostComponent, CourseDurationPipe]}).compileComponents();
+		await TestBed.configureTestingModule({
+			declarations: [CourseItemComponent, TestHostComponent, CourseDurationPipe],
+			providers: [{ provide: Router, useValue: router }],
+		}).compileComponents();
 	});
 
 	beforeEach((): void => {

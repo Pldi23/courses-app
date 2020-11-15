@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CourseItem } from './course-item';
 
 @Injectable({
-  providedIn: 'root',
+  	providedIn: 'root',
 })
 export class CourseItemsService {
 
@@ -15,8 +15,6 @@ export class CourseItemsService {
 		{id: 6, title: 'Python lessons', creationDate: new Date(2020, 5, 2), duration: 91, description: 'ENGL 254. Popular Literary Genres (3)\nIntroduction to the study of one or more popular literary genres, such as mystery, crime fiction, urban romance, fantasy, science fiction, horror, gothic, western, thriller, spy fiction, etc. Analysis of generic conventions and how these conventions reflect sociocultural concerns over time. Focus on skills requisite for thinking and writing critically about literary works within their historical contexts. Critical writing is an integral part of the course. (Available for General Education, C2 Humanities.)', topRated: false},
 		{id: 7, title: 'NodeJs lessons', creationDate: new Date(2020, 2, 8), duration: 70, description: 'ENGL 254. Popular Literary Genres (3)\nIntroduction to the study of one or more popular literary genres, such as mystery, crime fiction, urban romance, fantasy, science fiction, horror, gothic, western, thriller, spy fiction, etc. Analysis of generic conventions and how these conventions reflect sociocultural concerns over time. Focus on skills requisite for thinking and writing critically about literary works within their historical contexts. Critical writing is an integral part of the course. (Available for General Education, C2 Humanities.)', topRated: false},
   	];
-
-  	constructor() { }
 
   	public getList(): CourseItem[] {
 		return this.courses;

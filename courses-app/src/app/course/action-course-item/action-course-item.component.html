@@ -1,0 +1,26 @@
+<div class="course-container">
+	<div class="course-content">
+		<label>
+			<span class="float-left">Title:</span>
+			<br>
+			<input [(ngModel)]="course.title" type="text" placeholder="title">
+		</label>
+		<br>
+		<label>
+			<span class="float-left">Description:</span>
+			<br>
+			<textarea id="description" [(ngModel)]="course.description" type="text" placeholder="description"></textarea>
+		</label>
+		<br>
+		<app-date-input [creationDate]="course.creationDate"></app-date-input>
+		<br>
+		<app-duration-input [duration]="course.duration"></app-duration-input>
+		<br>
+		<app-authors-input></app-authors-input>
+		<div class="row">
+			<input id="save" type="submit" value="Save" (click)="save()">
+			&nbsp;
+			<input id="cancel" type="submit" value="Cancel" (click)="cancel()">
+		</div>
+	</div>
+</div>

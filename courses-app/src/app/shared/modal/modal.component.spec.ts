@@ -1,6 +1,6 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { ModalComponent } from './modal.component';
 
 describe('ModalComponent', (): void => {
@@ -10,11 +10,15 @@ describe('ModalComponent', (): void => {
 		await TestBed.configureTestingModule({
 			declarations: [ ModalComponent ],
 		})
+			.overrideComponent(ModalComponent, { set: {changeDetection: ChangeDetectionStrategy.Default}})
 			.compileComponents();
 	});
 	beforeEach((): void => {
 		fixture = TestBed.createComponent(ModalComponent);
 		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
+	afterEach((): void => {
 		fixture.detectChanges();
 	});
 	it('should create', (): void => {

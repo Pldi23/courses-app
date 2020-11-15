@@ -8,7 +8,7 @@ export class AuthService {
 	constructor() { }
 
 	public login(userName: string, password: string): void {
-		if (userName !== null && password !== null) {
+		if (userName != null && password != null) {
 			localStorage.setItem(CURRENT_USER, userName);
 		}
 	}
@@ -16,7 +16,7 @@ export class AuthService {
 		localStorage.removeItem(CURRENT_USER);
 	}
 	public isAuthenticated(): boolean {
-		return localStorage.getItem(CURRENT_USER) !== null;
+		return localStorage.getItem(CURRENT_USER) != null;
 	}
 	public getUserInfo(): string {
 		return localStorage.getItem(CURRENT_USER);

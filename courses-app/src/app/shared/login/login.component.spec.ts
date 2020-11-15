@@ -1,20 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {Router} from '@angular/router';
+import { ComponentFixture, TestBed} from '@angular/core/testing';
+import { NavigationExtras, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', (): void => {
 	let component: LoginComponent;
 	let fixture: ComponentFixture<LoginComponent>;
-	const router: any = {
-		navigate: jasmine.createSpy('navigate'),
+	const mockRouter: Partial<Router> = {
+		navigate(commands: any[], extras?: NavigationExtras): any {
+		},
 	};
 	beforeEach(async (): Promise<void> => {
 		await TestBed.configureTestingModule({
 			imports: [ RouterTestingModule ],
 			declarations: [ LoginComponent ],
-			providers: [{ provide: Router, useValue: router }],
+			providers: [{ provide: Router, useValue: mockRouter }],
 		})
 			.compileComponents();
 	});
@@ -29,15 +29,17 @@ describe('LoginComponent', (): void => {
 	it('should not navigate to courses when logout with undefined username or password', (): void => {
 		component.userName = undefined;
 		component.password = undefined;
-		fixture.detectChanges();
-		component.login();
-		expect(router.navigate).not.toHaveBeenCalledWith(['/courses']);
+		const buttonElement: any = fixture.nativeElement.querySelector('#login');
+		const dataSpy: any = spyOn(mockRouter, 'navigate');
+		buttonElement.click();
+		expect(dataSpy).not.toHaveBeenCalled();
 	});
 	it('should navigate to courses when logout with username or password', (): void => {
 		component.userName = 'user';
 		component.password = 'password';
-		fixture.detectChanges();
-		component.login();
-		expect(router.navigate).toHaveBeenCalledWith(['/courses']);
+		const buttonElement: any = fixture.nativeElement.querySelector('#login');
+		const dataSpy: any = spyOn(mockRouter, 'navigate');
+		buttonElement.click();
+		expect(dataSpy).toHaveBeenCalled();
 	});
 });
