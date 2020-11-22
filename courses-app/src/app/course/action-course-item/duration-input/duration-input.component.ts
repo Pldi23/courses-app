@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   	selector: 'app-duration-input',
@@ -6,12 +6,8 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   	styleUrls: ['./duration-input.component.scss', '../action-course-item.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DurationInputComponent implements OnInit {
+export class DurationInputComponent {
 	@Input() public duration: number;
-  	constructor() { }
-
-  	public ngOnInit(): void {
-  	}
 
   	public isVisible(): boolean {
   		return typeof this.duration == 'number';

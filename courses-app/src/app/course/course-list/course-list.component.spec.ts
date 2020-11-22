@@ -66,56 +66,41 @@ describe('CourseListComponent', (): void => {
 	});
 
 	it('should load 3 more courses when load more button clicked', (): void => {
-		const consoleLogText: string = 'load more click';
 		const loadMoreButtonElement: any = fixture.nativeElement.querySelector('#loadMoreButton');
 		const dataSpy: any = spyOn(service, 'fetch');
-		const spy: any = spyOn(console, 'log');
 		loadMoreButtonElement.click();
-		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(dataSpy).toHaveBeenCalledWith(1, 4);
 	});
 
 	it('should load first 3 courses on init', (): void => {
-		const consoleLogText: string = 'Courses List on init';
 		const dataSpy: any = spyOn(service, 'fetch');
-		const spy: any = spyOn(console, 'log');
 		component.ngOnInit();
-		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(dataSpy).toHaveBeenCalledWith(0, 3);
 	});
 
 	it('should search items in list when search button clicked', (): void => {
-		const consoleLogText: string = 'search click';
 		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
 		const dataSpy: any = spyOn(service, 'getList');
 		component.searchText = 'text';
-		const spy: any = spyOn(console, 'log');
 		searchButtonElement.click();
-		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(dataSpy).toHaveBeenCalledWith();
 	});
 
 	it('should not search items in list when search button clicked but no text in input', (): void => {
-		const consoleLogText: string = 'search click';
 		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
 		const dataSpy: any = spyOn(service, 'getList');
-		const spy: any = spyOn(console, 'log');
 		searchButtonElement.click();
-		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(dataSpy).not.toHaveBeenCalledWith();
 	});
 
 	it('should delete item when list contain item', (): void => {
-		const consoleLogText: string = 'delete click';
 		const course: CourseItem = component.coursesList[0];
-		const spy: any = spyOn(console, 'log');
+		const spyRemove: any = spyOn(service, 'remove');
 		component.handleDelete(course);
-		expect(spy).toHaveBeenCalledWith(consoleLogText);
-		expect(spy).toHaveBeenCalledWith(course);
+		expect(spyRemove).toHaveBeenCalledWith(course);
 	});
 
 	it('should not delete item when list not contain item', (): void => {
-		const consoleLogText: string = 'delete click';
 		const expectedList: CourseItem[] = component.coursesList;
 		const course: CourseItem = {
 			id: 100,
@@ -125,9 +110,7 @@ describe('CourseListComponent', (): void => {
 			description: 'ENGL',
 			topRated: true,
 		};
-		const spy: any = spyOn(console, 'log');
 		component.handleDelete(course);
-		expect(spy).toHaveBeenCalledWith(consoleLogText);
 		expect(component.coursesList).toEqual(expectedList);
 	});
 });

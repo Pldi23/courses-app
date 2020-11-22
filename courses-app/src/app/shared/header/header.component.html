@@ -8,14 +8,24 @@
 			<ul class="nav justify-content-end">
 				<li class="nav-item">
 					<a class="nav-link text-light">
-						<img src="/assets/user.svg" width="25" height="25" alt="">
+						<i class="fa fas fa-user"></i>
 						{{userName}}
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-light" href="#" (click)="logout()">
-						<img src="/assets/enter.svg" width="25" height="25" alt="">
+						<i class="fa fas fa-sign-out-alt"></i>
 						Log out
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div *ngIf="shouldShowLogin()">
+			<ul class="nav justify-content-end">
+				<li class="nav-item">
+					<a class="nav-link text-light fontAwesome" href="#" routerLink="/login">
+						<i class="fa fas fa-sign-in-alt"></i>
+						Log in
 					</a>
 				</li>
 			</ul>

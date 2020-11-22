@@ -1,15 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ActionCourseItemComponent } from './course/action-course-item/action-course-item.component';
-import { CourseListComponent } from './course/course-list/course-list.component';
-import { LoginComponent } from './shared/login/login.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: '/login', pathMatch: 'full' },
-	{ path: 'login', component: LoginComponent },
-	{ path: 'courses', component: CourseListComponent },
-	{ path: 'courses/:id', component: ActionCourseItemComponent },
-	{ path: 'courses/new', component: ActionCourseItemComponent},
+	{
+		path: '',
+		redirectTo: '/login',
+		pathMatch: 'full',
+	},
+	{
+		path: 'login',
+		loadChildren: (): any => import('./shared/login/login.module').then((m: any): any => m.LoginModule),
+	},
+	{
+		path: 'courses',
+		loadChildren: (): any => import('./course/courses.module').then((m: any): any => m.CoursesModule),
+	},
+	{
+		path: '**',
+		loadChildren: (): any => import('./shared/not-found/not-found.module').then((m: any): any => m.NotFoundModule),
+	},
 	];
 
 @NgModule({

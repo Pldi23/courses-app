@@ -1,13 +1,31 @@
+import {state} from '@angular/animations';
 import { ComponentFixture, TestBed} from '@angular/core/testing';
-import { NavigationExtras, Router } from '@angular/router';
+import {Navigation, NavigationExtras, Router, UrlTree} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', (): void => {
 	let component: LoginComponent;
 	let fixture: ComponentFixture<LoginComponent>;
+	const mockExtras: NavigationExtras = {
+		state : {
+			data: '',
+			route: '',
+		},
+	};
+	const mockNavigation: Navigation = {
+		extras : mockExtras,
+		id: 1,
+		initialUrl: '',
+		extractedUrl: new UrlTree(),
+		trigger: 'popstate',
+		previousNavigation: this,
+	};
 	const mockRouter: Partial<Router> = {
 		navigate(commands: any[], extras?: NavigationExtras): any {
+		},
+		getCurrentNavigation(): Navigation {
+			return mockNavigation;
 		},
 	};
 	beforeEach(async (): Promise<void> => {

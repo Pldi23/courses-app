@@ -1,15 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from '../app-routing.module';
+import { RouterModule } from '@angular/router';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { LogoComponent } from './logo/logo.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  	declarations: [HeaderComponent, FooterComponent, BreadcrumbComponent, LogoComponent, LoginComponent],
+  	declarations: [
+  		HeaderComponent,
+		FooterComponent,
+		BreadcrumbComponent,
+		LogoComponent,
+		LoginComponent,
+		NotFoundComponent,
+	],
   	exports: [
 		HeaderComponent,
 		FooterComponent,
@@ -18,7 +26,7 @@ import { LogoComponent } from './logo/logo.component';
 	imports: [
 		CommonModule,
 		FormsModule,
-		AppRoutingModule,
+		RouterModule,
 	],
 })
 export class SharedModule { }

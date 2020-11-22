@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Navigation, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -8,17 +8,25 @@ import { AuthService } from '../auth.service';
   	styleUrls: ['./login.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 	@Input() public userName: string;
 	@Input() public password: string;
-	constructor(private  readonly authService: AuthService, private readonly router: Router) { }
-	public ngOnInit(): void {
-  	}
+	public data: string;
+	public url: string;
+	constructor(private  readonly authService: AuthService, private readonly router: Router) {
+		const navigation: Navigation = this.router.getCurrentNavigation();
+		const state: any = navigation.extras.state as {data: string, route: string};
+		if (state !== undefined) {
+			this.data = state.data;
+			this.url = state.route;
+		}
+	}
 
   	public login(): void {
 		if (this.userName !== undefined && this.password !== undefined) {
 			this.authService.login(this.userName, this.password);
-			this.router.navigate(['/courses']);
+			const path: string = this.url == null ? '/courses' : this.url;
+			this.router.navigate([path]);
 		}
 	}
 

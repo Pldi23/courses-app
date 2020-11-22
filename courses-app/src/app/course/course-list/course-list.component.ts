@@ -17,12 +17,10 @@ export class CourseListComponent implements OnInit {
   	constructor(private readonly courseService: CourseItemsService) { }
 
   	public ngOnInit(): void {
-		console.log('Courses List on init');
 		this.coursesList = this.courseService.fetch(0, DEFAULT_LIST_SIZE);
   	}
 
   	public fetchMore(): void {
-		console.log('load more click');
 		const size: number = this.coursesList.length;
 		const courseItems: CourseItem[] = this.courseService
 			.fetch(size, size + DEFAULT_LIST_SIZE);
@@ -30,7 +28,6 @@ export class CourseListComponent implements OnInit {
   	}
 
   	public search(): void {
-		console.log('search click');
 		if (this.searchText != undefined) {
 			const filterByTitlePipe: FilterByTitlePipe = new FilterByTitlePipe();
 			const items: CourseItem[] = this.courseService.getList();
@@ -40,7 +37,6 @@ export class CourseListComponent implements OnInit {
   	}
 
   	public handleDelete(course: CourseItem): void {
-		console.log('delete click');
 		this.courseService.remove(course);
 		this.coursesList = this.courseService.fetch(0, DEFAULT_LIST_SIZE);
   	}

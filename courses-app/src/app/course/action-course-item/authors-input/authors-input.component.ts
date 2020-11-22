@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   	selector: 'app-authors-input',
@@ -6,9 +6,5 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   	styleUrls: ['./authors-input.component.scss', '../action-course-item.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthorsInputComponent implements OnInit {
-
-  	public ngOnInit(): void {
-  	}
-
+export class AuthorsInputComponent {
 }

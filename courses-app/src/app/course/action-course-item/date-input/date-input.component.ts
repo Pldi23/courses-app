@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   	selector: 'app-date-input',
@@ -6,11 +6,8 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   	styleUrls: ['./date-input.component.scss', '../action-course-item.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateInputComponent implements OnInit {
+export class DateInputComponent {
 
 	@Input() public creationDate: Date;
-
-  	public ngOnInit(): void {
-  	}
 
 }
