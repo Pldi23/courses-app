@@ -6,7 +6,9 @@ import { CourseItem } from '../../course/course-item';
 })
 export class OrderByCreationDatePipe implements PipeTransform {
 	public transform(items: CourseItem[]): CourseItem[] {
-		return items.sort(((a: CourseItem, b: CourseItem): any => (b.creationDate.getTime() - a.creationDate.getTime())));
+		return items.length > 1 ?
+			items.sort(((a: CourseItem, b: CourseItem): number => (new Date(b.date).getTime() - new Date(a.date).getTime()))) :
+			items;
   }
 
 }

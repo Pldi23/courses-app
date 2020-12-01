@@ -1,27 +1,30 @@
-<app-breadcrumbs></app-breadcrumbs>
+<ng-container *ngIf="(course$ | async) as data">
+
+<app-breadcrumbs [title]="data.name"></app-breadcrumbs>
 <div class="course-container">
 	<div class="course-content">
 		<label>
 			<span class="float-left">Title:</span>
 			<br>
-			<input [(ngModel)]="course.title" type="text" placeholder="title">
+			<input [(ngModel)]="data.name" type="text" placeholder="title">
 		</label>
 		<br>
 		<label>
 			<span class="float-left">Description:</span>
 			<br>
-			<textarea id="description" [(ngModel)]="course.description" type="text" placeholder="description"></textarea>
+			<textarea id="description" [(ngModel)]="data.description" type="text" placeholder="description"></textarea>
 		</label>
 		<br>
-		<app-date-input [creationDate]="course.creationDate"></app-date-input>
+		<app-date-input [creationDate]="data.date" (loadDate)="loadDate($event, data)"></app-date-input>
 		<br>
-		<app-duration-input [duration]="course.duration"></app-duration-input>
+		<app-duration-input [duration]="data.length" (loadLength)="loadDuration($event, data)"></app-duration-input>
 		<br>
-		<app-authors-input></app-authors-input>
+		<app-authors-input [authors]="data.authors" (loadAuthors)="loadAuthors($event, data)"></app-authors-input>
 		<div class="row">
-			<input id="save" type="submit" value="Save" (click)="save()">
+			<input id="save" type="submit" value="Save" (click)="save(data)">
 			&nbsp;
 			<input id="cancel" type="submit" value="Cancel" (click)="cancel()">
 		</div>
 	</div>
 </div>
+</ng-container>

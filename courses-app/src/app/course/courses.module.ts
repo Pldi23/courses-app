@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CourseCreationDateBorderDirective } from '../directive/course-creation-date-border.directive';
+import { AuthorNamePipe } from '../pipe/author/author-name.pipe';
 import { CourseDurationPipe } from '../pipe/course-duration/course-duration.pipe';
 import { OrderByCreationDatePipe } from '../pipe/order/order-by-creation-date.pipe';
 import { ModalComponent } from '../shared/modal/modal.component';
@@ -26,12 +27,14 @@ import { CourseRoutingModule } from './course-routing.module';
 		DateInputComponent,
 		DurationInputComponent,
 		AuthorsInputComponent,
+		AuthorNamePipe,
 	],
   	exports: [
 		CourseListComponent,
 		CourseCreationDateBorderDirective,
 		CourseDurationPipe,
 		OrderByCreationDatePipe,
+		AuthorNamePipe,
   	],
 	imports: [
 		CommonModule,

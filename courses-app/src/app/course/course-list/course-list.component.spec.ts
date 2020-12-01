@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of, Observable } from 'rxjs';
 import { OrderByCreationDatePipe } from '../../pipe/order/order-by-creation-date.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemsService } from '../course-items.service';
@@ -9,40 +10,43 @@ describe('CourseListComponent', (): void => {
 	let fixture: ComponentFixture<CourseListComponent>;
 	let service: CourseItemsService;
 	const serviceStub: Partial<CourseItemsService> = {
-		fetch(): CourseItem[] {
-			return [
+		fetch(): Observable<CourseItem[]> {
+			return of([
 				{
 					id: 1,
-					title: 'Angular lessons',
-					creationDate: new Date(2020, 2, 2),
-					duration: 90,
+					name: 'Angular lessons',
+					date: new Date(2020, 2, 2),
+					length: 90,
 					description: 'desc',
-					topRated: true,
+					isTopRated: true,
+					authors: [],
 				},
-			];
+			]);
 		},
-		getList(): CourseItem[] {
-			return [
+		getList(): Observable<CourseItem[]> {
+			return of([
 				{
 					id: 2,
-					title: 'React lessons',
-					creationDate: new Date(2020, 2, 2),
-					duration: 95,
+					name: 'React lessons',
+					date: new Date(2020, 2, 2),
+					length: 95,
 					description: 'desc',
-					topRated: true,
+					isTopRated: true,
+					authors: [],
 				},
 				{
 					id: 3,
-					title: 'TypeScript lessons',
-					creationDate: new Date(2020, 2, 2),
-					duration: 29,
+					name: 'TypeScript lessons',
+					date: new Date(2020, 2, 2),
+					length: 29,
 					description: 'desc',
-					topRated: true,
+					isTopRated: true,
+					authors: [],
 				},
-			];
+			]);
 		},
-		remove(course: CourseItem): void {
-			console.log(course);
+		remove(course: CourseItem): Observable<void> {
+			return of(console.log(course));
 		},
 	};
 
@@ -56,9 +60,9 @@ describe('CourseListComponent', (): void => {
 
 	beforeEach((): void => {
 		fixture = TestBed.createComponent(CourseListComponent);
+		service = TestBed.inject(CourseItemsService);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
-		service = TestBed.inject(CourseItemsService);
 	});
 
 	it('should create', (): void => {
@@ -69,48 +73,21 @@ describe('CourseListComponent', (): void => {
 		const loadMoreButtonElement: any = fixture.nativeElement.querySelector('#loadMoreButton');
 		const dataSpy: any = spyOn(service, 'fetch');
 		loadMoreButtonElement.click();
-		expect(dataSpy).toHaveBeenCalledWith(1, 4);
-	});
-
-	it('should load first 3 courses on init', (): void => {
-		const dataSpy: any = spyOn(service, 'fetch');
-		component.ngOnInit();
-		expect(dataSpy).toHaveBeenCalledWith(0, 3);
+		expect(dataSpy).toHaveBeenCalledWith(0, 4, undefined);
 	});
 
 	it('should search items in list when search button clicked', (): void => {
 		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
-		const dataSpy: any = spyOn(service, 'getList');
+		const dataSpy: any = spyOn(service, 'fetch');
 		component.searchText = 'text';
 		searchButtonElement.click();
-		expect(dataSpy).toHaveBeenCalledWith();
+		expect(dataSpy).toHaveBeenCalledWith(0, 3, 'text');
 	});
 
 	it('should not search items in list when search button clicked but no text in input', (): void => {
 		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
-		const dataSpy: any = spyOn(service, 'getList');
+		const dataSpy: any = spyOn(service, 'fetch');
 		searchButtonElement.click();
 		expect(dataSpy).not.toHaveBeenCalledWith();
-	});
-
-	it('should delete item when list contain item', (): void => {
-		const course: CourseItem = component.coursesList[0];
-		const spyRemove: any = spyOn(service, 'remove');
-		component.handleDelete(course);
-		expect(spyRemove).toHaveBeenCalledWith(course);
-	});
-
-	it('should not delete item when list not contain item', (): void => {
-		const expectedList: CourseItem[] = component.coursesList;
-		const course: CourseItem = {
-			id: 100,
-			title: 'any',
-			creationDate: new Date(2020, 2, 2),
-			duration: 90,
-			description: 'ENGL',
-			topRated: true,
-		};
-		component.handleDelete(course);
-		expect(component.coursesList).toEqual(expectedList);
 	});
 });

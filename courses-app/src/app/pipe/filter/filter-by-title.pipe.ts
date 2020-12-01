@@ -6,7 +6,7 @@ import {CourseItem} from '../../course/course-item';
 })
 export class FilterByTitlePipe implements PipeTransform {
 	public transform(items: CourseItem[], title: string): CourseItem[] {
-		return items.filter((course: CourseItem): boolean => course.title.toLowerCase().includes(title.trim().toLowerCase()));
+		return items.filter((course: CourseItem): boolean => course.name.toLowerCase().includes(title.trim().toLowerCase()));
   }
 
 }

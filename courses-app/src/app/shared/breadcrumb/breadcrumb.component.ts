@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CourseItem} from '../../course/course-item';
-import {CourseItemsService} from '../../course/course-items.service';
 import { IBreadCrumb } from './breadcrumb';
 
 @Component({
@@ -12,10 +10,10 @@ import { IBreadCrumb } from './breadcrumb';
 })
 export class BreadcrumbComponent implements OnInit {
 	public breadcrumb: IBreadCrumb;
+	@Input() public title: string;
 
 	constructor(private readonly router: Router,
-				private readonly route: ActivatedRoute,
-				private readonly courseService: CourseItemsService) {
+				private readonly route: ActivatedRoute) {
 	}
 
 	public ngOnInit(): void {
@@ -37,8 +35,9 @@ export class BreadcrumbComponent implements OnInit {
 
 	private mapLabel(key: string, label: string): string {
 		if (key === 'courseId') {
-			const courseItem: CourseItem = this.courseService.getById(Number(label));
-			label = courseItem.title;
+			if (this.title !== null) {
+				label = this.title;
+			}
 		}
 		return label;
 	}

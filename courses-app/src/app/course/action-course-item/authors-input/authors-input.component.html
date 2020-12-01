@@ -1,5 +1,9 @@
 <label>
-	<span class="float-left">Authors:</span>
+	<span class="float-left">[*Todo]Authors:</span>
 	<br>
-	<input>
+	<div *ngFor="let author of authors"
+		 [(ngModel)]="authors"
+		 (ngModelChange)="loadAuthors.emit($event)" ngDefaultControl>
+		<p>{{author | authorName}}</p>
+	</div>
 </label>

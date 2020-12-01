@@ -1,7 +1,9 @@
-import {state} from '@angular/animations';
 import { ComponentFixture, TestBed} from '@angular/core/testing';
-import {Navigation, NavigationExtras, Router, UrlTree} from '@angular/router';
+import { Navigation, NavigationExtras, Router, UrlTree } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of, Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
+import { UserEntity } from '../user-entity';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', (): void => {
@@ -28,11 +30,19 @@ describe('LoginComponent', (): void => {
 			return mockNavigation;
 		},
 	};
+	const mockAuthService: Partial<AuthService> = {
+		login(userName: string, password: string): Observable<string> {
+			return of('token');
+		},
+		getUserInfo(): Observable<UserEntity> {
+			return of(new UserEntity(222, 'name', 'name', 'login', 'pass'));
+		},
+	};
 	beforeEach(async (): Promise<void> => {
 		await TestBed.configureTestingModule({
 			imports: [ RouterTestingModule ],
 			declarations: [ LoginComponent ],
-			providers: [{ provide: Router, useValue: mockRouter }],
+			providers: [{ provide: Router, useValue: mockRouter }, {provide: AuthService, useValue: mockAuthService}],
 		})
 			.compileComponents();
 	});

@@ -17,7 +17,7 @@ describe('AuthGuard', (): void => {
   	beforeEach((): void => {
   		TestBed.configureTestingModule({
 			imports: [ RouterTestingModule ],
-			providers: [{ provide: Router, useValue: mockRouter }],
+			providers: [{ provide: Router, useValue: mockRouter }, {provide: AuthService, useValue: authService}],
 		});
   		guard = TestBed.inject(AuthGuard);
   	});

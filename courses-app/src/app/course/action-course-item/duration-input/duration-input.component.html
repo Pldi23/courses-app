@@ -1,5 +1,5 @@
 <label>
 	<span class="float-left">Duration:</span>
 	<br>
-	<input [(ngModel)]="duration" type="number" placeholder="duration" class="input-location"> <span class="span-location" *ngIf="isVisible()">{{duration | courseDuration}}</span>
+	<input [(ngModel)]="duration" (ngModelChange)="loadLength.emit(duration)" type="number" placeholder="duration" class="input-location"> <span class="span-location" *ngIf="isVisible()">{{duration | courseDuration}}</span>
 </label>

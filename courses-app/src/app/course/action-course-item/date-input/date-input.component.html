@@ -2,5 +2,5 @@
 	<span class="float-left">Date:</span>
 	<br>
 	<input class="input-location" [ngModel]="creationDate | date:'yyyy-MM-dd'"
-		   (ngModelChange)="creationDate = $event" type="date" placeholder="creation date">
+		   (ngModelChange)="loadDate.emit($event)" type="date" placeholder="creation date">
 </label>

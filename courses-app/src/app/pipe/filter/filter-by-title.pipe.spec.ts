@@ -6,16 +6,16 @@ describe('FilterByTitlePipe', (): void => {
 		const pipe: FilterByTitlePipe = new FilterByTitlePipe();
 		expect(pipe).toBeTruthy();
   	});
-	it('should filter items by title when courseItems array passed', (): void => {
+	it('should filter items by name when courseItems array passed', (): void => {
 		const pipe: FilterByTitlePipe = new FilterByTitlePipe();
 		const items: CourseItem[] = [
-			{id: 1, title: 'Angular lessons', creationDate: new Date(2020, 9, 26), duration: 90, description: 'ENGL', topRated: true},
-			{id: 2, title: 'React lessons', creationDate: new Date(2020, 9, 30), duration: 95, description: 'ENGL', topRated: false},
+			{id: 1, name: 'Angular lessons', date: new Date(2020, 9, 26), length: 90, description: 'ENGL', isTopRated: true, authors: []},
+			{id: 2, name: 'React lessons', date: new Date(2020, 9, 30), length: 95, description: 'ENGL', isTopRated: false, authors: []},
 		];
 		const text: string = 'Ang';
 		const actual: CourseItem[] = pipe.transform(items, text);
 		const expected: CourseItem[] = [
-			{id: 1, title: 'Angular lessons', creationDate: new Date(2020, 9, 26), duration: 90, description: 'ENGL', topRated: true},
+			{id: 1, name: 'Angular lessons', date: new Date(2020, 9, 26), length: 90, description: 'ENGL', isTopRated: true, authors: []},
 		];
 		expect(actual).toEqual(expected);
 	});

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   	selector: 'app-date-input',
@@ -9,5 +9,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 export class DateInputComponent {
 
 	@Input() public creationDate: Date;
+	@Output() public  loadDate: EventEmitter<Date> = new EventEmitter<Date>();
 
 }

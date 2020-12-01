@@ -10,11 +10,12 @@ describe('CourseItemComponent', (): void => {
 	let fixture: ComponentFixture<CourseItemComponent>;
 	const courseItem: CourseItem = {
 		id: 1,
-		title: 'name',
-		duration: 90,
-		creationDate: new Date(2020, 0, 1),
+		name: 'name',
+		length: 90,
+		date: new Date(2020, 0, 1),
 		description: 'description',
-		topRated: true,
+		isTopRated: true,
+		authors: [],
 	};
 	const router: any = {
 		navigate: jasmine.createSpy('navigate'),
@@ -89,11 +90,12 @@ describe('Test CourseItemComponent using test host', (): void => {
 	let fixture: ComponentFixture<TestHostComponent>;
 	const course: CourseItem = {
 		id: 0,
-		title: 'name',
-		creationDate: new Date(2020, 2, 2),
-		duration: 90,
+		name: 'name',
+		date: new Date(2020, 2, 2),
+		length: 90,
 		description: 'description',
-		topRated: true,
+		isTopRated: true,
+		authors: [],
 	};
 	const router: any = {
 		navigate: jasmine.createSpy('navigate'),

@@ -6,10 +6,10 @@
 		<h1 class="login-title">Login</h1>
 		<span class="float-left">E-mail</span>
 		<span class="right">*required</span>
-		<input [(ngModel)]="userName" type="text" placeholder="Enter e-mail">
+		<input [(ngModel)]="userName" type="email" placeholder="Enter e-mail">
 		<span class="float-left">Password</span>
 		<span class="right">*required</span>
-		<input [(ngModel)]="password" type="text" placeholder="Enter password">
+		<input [(ngModel)]="password" type="password" placeholder="Enter password">
 		<div class="or-separator"></div>
 		<a class="forget-pass-link">forget password?</a>
 		<input id="login" type="submit" value="Submit" (click)="login()">

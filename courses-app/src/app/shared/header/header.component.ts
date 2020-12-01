@@ -18,14 +18,14 @@ export class HeaderComponent implements OnInit, DoCheck {
 	}
 
   	public ngOnInit(): void {
-  		this.userName = this.authService.getUserInfo();
+  		this.userName = this.authService.getUserName();
   		this.isAuthenticated = this.authService.isAuthenticated();
   	}
   	public logout(): void {
   		this.authService.logout();
 	}
 	public ngDoCheck(): void {
-		this.userName = this.authService.getUserInfo();
+		this.userName = this.authService.getUserName();
 		this.isAuthenticated = this.authService.isAuthenticated();
 		this.ref.markForCheck();
 	}
