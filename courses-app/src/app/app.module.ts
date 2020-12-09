@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoursesModule } from './course/courses.module';
 import { FilterByTitlePipe } from './pipe/filter/filter-by-title.pipe';
-import { SharedModule } from './shared/shared.module';
 import { TokenInterceptor } from './shared/interceptor/token-interceptor';
-import {UrlInterceptor} from './shared/interceptor/url-interceptor';
+import { UrlInterceptor } from './shared/interceptor/url-interceptor';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
 	declarations: [

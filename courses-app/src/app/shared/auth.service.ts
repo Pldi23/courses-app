@@ -1,9 +1,9 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {LOGIN_PATH, TOKEN, USER_INFO_PATH, USER_NAME} from '../constant';
-import {UserEntity} from './user-entity';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { LOGIN_PATH, TOKEN, USER_INFO_PATH, USER_NAME } from '../constant';
+import { UserEntity } from './user-entity';
 
 @Injectable({
 	providedIn: 'root',

@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {AuthorItem} from '../../author-item';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { AuthorItem } from '../../author-item';
 
 @Component({
 	selector: 'app-authors-input',

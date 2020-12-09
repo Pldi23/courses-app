@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {AuthorItem} from '../../course/author-item';
+import { AuthorItem } from '../../course/author-item';
 
 @Pipe({
   	name: 'authorName',

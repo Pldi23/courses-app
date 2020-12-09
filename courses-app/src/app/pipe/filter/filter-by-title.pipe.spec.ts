@@ -1,4 +1,4 @@
-import {CourseItem} from '../../course/course-item';
+import { CourseItem } from '../../course/course-item';
 import { FilterByTitlePipe } from './filter-by-title.pipe';
 
 describe('FilterByTitlePipe', (): void => {

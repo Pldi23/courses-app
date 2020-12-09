@@ -1,4 +1,4 @@
-import {IAuthorItem} from './iauthor-item';
+import { IAuthorItem } from './iauthor-item';
 
 export interface ICourseItem {
   	date: Date;

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import {ActivatedRouteSnapshot, NavigationExtras, Router, RouterStateSnapshot} from '@angular/router';
-import {RouterTestingModule} from '@angular/router/testing';
-import {AuthService} from '../shared/auth.service';
+import { ActivatedRouteSnapshot, NavigationExtras, Router, RouterStateSnapshot } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '../shared/auth.service';
 
 import { AuthGuard } from './auth.guard';
 

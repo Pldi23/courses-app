@@ -1,12 +1,12 @@
-import {HttpErrorResponse} from '@angular/common/http';
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {of, Observable} from 'rxjs';
-import {catchError, tap} from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import {AuthorItem} from '../author-item';
-import {CourseItem} from '../course-item';
-import {CourseItemsService} from '../course-items.service';
+import { AuthorItem } from '../author-item';
+import { CourseItem } from '../course-item';
+import { CourseItemsService } from '../course-items.service';
 
 @Component({
 	selector: 'app-add-edit-course',

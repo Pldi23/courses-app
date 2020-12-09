@@ -1,4 +1,4 @@
-import {IAuthorItem} from './iauthor-item';
+import { IAuthorItem } from './iauthor-item';
 
 export class AuthorItem implements IAuthorItem {
 	public id: number;

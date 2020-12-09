@@ -1,7 +1,7 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import {COURSE_PATH} from '../constant';
+import { Observable } from 'rxjs';
+import { COURSE_PATH } from '../constant';
 import { CourseItem } from './course-item';
 
 @Injectable({

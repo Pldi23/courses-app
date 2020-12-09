@@ -1,10 +1,10 @@
-import {HttpErrorResponse} from '@angular/common/http';
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {of, Observable} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { of, Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import {CourseItem} from '../course-item';
-import {CourseItemsService} from '../course-items.service';
+import { CourseItem } from '../course-item';
+import { CourseItemsService } from '../course-items.service';
 
 @Component({
 	selector: 'app-courses-list',
