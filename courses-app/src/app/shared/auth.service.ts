@@ -39,6 +39,6 @@ export class AuthService {
 		};
 		return this.http.post<UserEntity>(USER_INFO_PATH, token)
 			.pipe(map((data: any): UserEntity =>
-				new UserEntity(data.id, data.name.firstName, data.name.lastName, data.login, null)));
+				new UserEntity(data.id, data.name.first, data.name.last, data.login, null)));
 	}
 }

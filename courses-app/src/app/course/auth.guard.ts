@@ -6,6 +6,7 @@ import {
 	Router,
 	RouterStateSnapshot,
 } from '@angular/router';
+import { of, Observable } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
 
 @Injectable({
@@ -19,15 +20,15 @@ export class AuthGuard implements CanActivate {
 	}
   	public canActivate(
   		route: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot): boolean {
+		state: RouterStateSnapshot): Observable<boolean> {
 		if (!this.authService.isAuthenticated() && this.routeURL !== '/login') {
 			this.routeURL = '/login';
 			const navigationExtras: NavigationExtras = {state: {data: 'Please login to have an access to requested page', route: state.url}};
 			this.router.navigate(['/login'], navigationExtras);
-			return false;
+			return of(false);
 		} else {
 			this.routeURL = this.router.url;
-			return true;
+			return of(true);
 		}
 	}
 }

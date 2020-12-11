@@ -4,28 +4,18 @@
       <app-logo></app-logo>
       <span class="navbar-brand mb-0 h1">Video course</span>
     </span>
-		<div *ngIf="isAuthenticated" id="headerUserInfoSection">
+		<div *ngIf="user" id="headerUserInfoSection">
 			<ul class="nav justify-content-end">
 				<li class="nav-item">
 					<a class="nav-link text-light">
 						<i class="fa fas fa-user"></i>
-						{{userName}}
+						{{user | userInfo}}
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-light" href="#" (click)="logout()">
 						<i class="fa fas fa-sign-out-alt"></i>
 						Log out
-					</a>
-				</li>
-			</ul>
-		</div>
-		<div *ngIf="shouldShowLogin()">
-			<ul class="nav justify-content-end">
-				<li class="nav-item">
-					<a class="nav-link text-light fontAwesome" href="#" routerLink="/login">
-						<i class="fa fas fa-sign-in-alt"></i>
-						Log in
 					</a>
 				</li>
 			</ul>

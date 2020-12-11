@@ -25,17 +25,23 @@ describe('AuthGuard', (): void => {
   	it('should be created', (): void => {
   		expect(guard).toBeTruthy();
   	});
-  	it('should return false when route is course and user is not authenticated', (): void => {
+  	it('should return false when route is course and user is not authenticated', (done: DoneFn): void => {
   		authService = { isAuthenticated(): boolean { return false; }};
   		guard = new AuthGuard(authService as AuthService, mockRouter as Router);
 
-  		expect(guard.canActivate(dummyRoute, fakeRouterState('/courses'))).toBeFalse();
+  		guard.canActivate(dummyRoute, fakeRouterState('/courses')).subscribe((value: any): any => {
+  			expect(value).toBeFalse();
+  			done();
+		});
 	});
-	it('should return true when route is course and user is authenticated', (): void => {
+	it('should return true when route is course and user is authenticated', (done: DoneFn): void => {
 		authService = { isAuthenticated(): boolean { return true; }};
 		guard = new AuthGuard(authService as AuthService, mockRouter as Router);
 
-		expect(guard.canActivate(dummyRoute, fakeRouterState('/courses'))).toBeTrue();
+		guard.canActivate(dummyRoute, fakeRouterState('/courses')).subscribe((value: any): any => {
+			expect(value).toBeTrue();
+			done();
+		});
 	});
 });
 

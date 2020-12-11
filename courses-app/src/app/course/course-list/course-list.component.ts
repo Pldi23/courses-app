@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { of, BehaviorSubject, Observable } from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { CourseItem } from '../course-item';
 import { CourseItemsService } from '../course-items.service';
@@ -16,38 +16,53 @@ export class CourseListComponent implements OnInit {
 
 	public coursesList$: Observable<CourseItem[]>;
 	@Input() public searchText: string;
-	private arrLength: number;
+	public arrLength: number = 0;
+	public state: BehaviorSubject<any> = new BehaviorSubject({
+		count: DEFAULT_LIST_SIZE,
+		isSearch: false,
+		text: '',
+	});
 
 	constructor(private readonly courseService: CourseItemsService) {
 	}
 
 	public ngOnInit(): void {
-		this.coursesList$ = this.courseService
-			.fetch(0, DEFAULT_LIST_SIZE, this.searchText)
-			.pipe(this.setArrLength(), this.handleError());
+		this.coursesList$ = this.state.pipe(
+			filter((state: any): boolean => !state.isSearch || state.text.length > FILTER_LIMIT),
+			debounceTime(DEBOUNCE_TIME),
+			distinctUntilChanged(),
+			switchMap((state: any): Observable<CourseItem[]> => {
+				return this.courseService
+						.fetch(0, state.count, state.text)
+						.pipe(this.setArrLength(), this.handleError());
+			}));
 	}
 
 	public fetchMore(): void {
-		this.coursesList$ = this.courseService
-			.fetch(0, this.arrLength + DEFAULT_LIST_SIZE, this.searchText)
-			.pipe(this.setArrLength(), this.handleError());
+		this.state.next({
+			count: this.arrLength + DEFAULT_LIST_SIZE,
+			isSearch: this.searchText !== undefined,
+			text: this.searchText,
+		});
 	}
 
 	public search(): void {
-		if (this.searchText != undefined) {
-			this.coursesList$ = this.courseService
-				.fetch(0, DEFAULT_LIST_SIZE, this.searchText)
-				.pipe(this.setArrLength(), this.handleError());
-		}
+		this.state.next({
+			count: DEFAULT_LIST_SIZE,
+			isSearch: true,
+			text: this.searchText,
+		});
 	}
 
 	public handleDelete(course: CourseItem): void {
-		this.coursesList$ = this.courseService.remove(course)
-			.pipe(map((): any => {
-				this.coursesList$ = this.courseService
-					.fetch(0, DEFAULT_LIST_SIZE, this.searchText)
-					.pipe(this.setArrLength(), this.handleError());
-			}));
+		this.courseService.remove(course)
+			.pipe(
+				map(
+					(): any => this.state.next({
+						count: this.arrLength,
+						isSearch: this.searchText !== undefined,
+						text: this.searchText,
+					}))).subscribe();
 	}
 
 	private handleError(): any {
@@ -65,3 +80,5 @@ export class CourseListComponent implements OnInit {
 }
 
 const DEFAULT_LIST_SIZE: number = 3;
+const DEBOUNCE_TIME: number = 300;
+const FILTER_LIMIT: number = 2;

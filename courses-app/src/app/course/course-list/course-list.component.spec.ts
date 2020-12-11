@@ -10,18 +10,8 @@ describe('CourseListComponent', (): void => {
 	let fixture: ComponentFixture<CourseListComponent>;
 	let service: CourseItemsService;
 	const serviceStub: Partial<CourseItemsService> = {
-		fetch(): Observable<CourseItem[]> {
-			return of([
-				{
-					id: 1,
-					name: 'Angular lessons',
-					date: new Date(2020, 2, 2),
-					length: 90,
-					description: 'desc',
-					isTopRated: true,
-					authors: [],
-				},
-			]);
+		fetch(start: number, count: number, text: string): Observable<CourseItem[]> {
+			return of(mockCourses.filter((course: CourseItem): boolean => course.name === text).slice(start, count));
 		},
 		getList(): Observable<CourseItem[]> {
 			return of([
@@ -69,25 +59,80 @@ describe('CourseListComponent', (): void => {
 		expect(component).toBeTruthy();
 	});
 
-	it('should load 3 more courses when load more button clicked', (): void => {
-		const loadMoreButtonElement: any = fixture.nativeElement.querySelector('#loadMoreButton');
-		const dataSpy: any = spyOn(service, 'fetch');
-		loadMoreButtonElement.click();
-		expect(dataSpy).toHaveBeenCalledWith(0, 4, undefined);
+	it('should load 3 more courses when load more button clicked', (done: DoneFn): void => {
+		component.arrLength = 3;
+		component.searchText = 'Angular lessons';
+		component.fetchMore();
+		component.coursesList$.subscribe((data: CourseItem[]): any => {
+			expect(data).toEqual(mockCourses);
+			done();
+		});
 	});
 
-	it('should search items in list when search button clicked', (): void => {
-		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
-		const dataSpy: any = spyOn(service, 'fetch');
-		component.searchText = 'text';
-		searchButtonElement.click();
-		expect(dataSpy).toHaveBeenCalledWith(0, 3, 'text');
-	});
-
-	it('should not search items in list when search button clicked but no text in input', (): void => {
-		const searchButtonElement: any = fixture.nativeElement.querySelector('#searchButton');
-		const dataSpy: any = spyOn(service, 'fetch');
-		searchButtonElement.click();
-		expect(dataSpy).not.toHaveBeenCalledWith();
+	it('should search items in list when search', (done: DoneFn): void => {
+		component.arrLength = 0;
+		component.searchText = 'Angular lessons';
+		component.search();
+		component.coursesList$.subscribe((data: CourseItem[]): any => {
+			expect(data).toEqual(mockCourses.slice(0, 3));
+			done();
+		});
 	});
 });
+
+const mockCourses: CourseItem[] = [
+	{
+		id: 1,
+		name: 'Angular lessons',
+		date: new Date(2020, 2, 2),
+		length: 90,
+		description: 'desc',
+		isTopRated: true,
+		authors: [],
+	},
+	{
+		id: 1,
+		name: 'Angular lessons',
+		date: new Date(2020, 2, 2),
+		length: 90,
+		description: 'desc',
+		isTopRated: true,
+		authors: [],
+	},
+	{
+		id: 1,
+		name: 'Angular lessons',
+		date: new Date(2020, 2, 2),
+		length: 90,
+		description: 'desc',
+		isTopRated: true,
+		authors: [],
+	},
+	{
+		id: 1,
+		name: 'Angular lessons',
+		date: new Date(2020, 2, 2),
+		length: 90,
+		description: 'desc',
+		isTopRated: true,
+		authors: [],
+	},
+	{
+		id: 1,
+		name: 'Angular lessons',
+		date: new Date(2020, 2, 2),
+		length: 90,
+		description: 'desc',
+		isTopRated: true,
+		authors: [],
+	},
+	{
+		id: 1,
+		name: 'Angular lessons',
+		date: new Date(2020, 2, 2),
+		length: 90,
+		description: 'desc',
+		isTopRated: true,
+		authors: [],
+	},
+];

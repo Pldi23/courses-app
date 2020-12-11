@@ -1,34 +1,29 @@
-<ng-container *ngIf="(coursesList$ | async) as values">
-	<app-breadcrumbs></app-breadcrumbs>
-	<div class="container-fluid containerBackgroung">
-		<br>
-		<div class="container">
-			<div class="input-group mb-3 col-3">
-				<input [(ngModel)]="searchText" type="text" class="form-control fontAwesome"
-					   placeholder="&#xF002; text to search">
-				<br>
-				<div class="input-group-append">
-					&nbsp;
-					<button class="btn btn-success" type="button" (click)="search()" id="searchButton">Search</button>
-				</div>
-			</div>
-			<div class="col text-right">
-				<button routerLink="/courses/new" type="button" class="btn btn-info btn-md"><img src="/assets/plus.svg"
-																								 width="20" height="20"
-																								 alt="edit">
-					Add course
-				</button>
-			</div>
+<app-breadcrumbs></app-breadcrumbs>
+<div class="container-fluid containerBackgroung">
+	<br>
+	<div class="container">
+		<div class="input-group mb-3 col-3">
+			<input id="searchInput" [(ngModel)]="searchText" (keyup)="search()" type="text" class="form-control fontAwesome"
+				   placeholder="&#xF002; text to search">
+		</div>
+		<div class="col text-right">
+			<button routerLink="/courses/new" type="button" class="btn btn-info btn-md"><img src="/assets/plus.svg"
+																							 width="20" height="20"
+																							 alt="edit">
+				Add course
+			</button>
+		</div>
+		<ng-container *ngIf="(coursesList$ | async) as values">
 			<br>
 			<div *ngIf="values.length === 0; else loadMore" class="alert alert-light text-md-center" role="alert">
 				No Data. Feel free to add new course
 			</div>
 			<ng-template #loadMore>
-			<div *ngFor="let courseItem of values | orderByCreationDate">
-				<app-courses-item id="itemId" [courseItem]="courseItem"
-								  (delete)="handleDelete($event)"></app-courses-item>
-				<br>
-			</div>
+				<div *ngFor="let courseItem of values | orderByCreationDate">
+					<app-courses-item id="itemId" [courseItem]="courseItem"
+									  (delete)="handleDelete($event)"></app-courses-item>
+					<br>
+				</div>
 				<div class="card">
 					<div class="card-body">
 						<div class="col text-md-center">
@@ -40,8 +35,8 @@
 				</div>
 			</ng-template>
 			<br>
-		</div>
-		<br>
-		<br>
+		</ng-container>
 	</div>
-</ng-container>
+	<br>
+	<br>
+</div>

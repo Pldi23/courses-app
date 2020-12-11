@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { TOKEN, USER_NAME } from '../../constant';
 import { AuthService } from '../auth.service';
+import { HeaderBehaviorService } from '../header/header-behavior.service';
 
 @Component({
   	selector: 'app-login',
@@ -19,7 +20,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 	public url: string;
 	public subs: Subscription;
 
-	constructor(private readonly authService: AuthService, private readonly router: Router) {
+	constructor(private readonly authService: AuthService,
+				private readonly router: Router,
+				private readonly headerService: HeaderBehaviorService) {
 	}
 
 	public ngOnInit(): void {
@@ -39,6 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 				.subscribe((data: any): any => {
 						localStorage.setItem(TOKEN, data.token);
 						localStorage.setItem(USER_NAME, this.userName);
+						this.headerService.setRefresh(true);
 						const path: string = this.url == null ? '/courses' : this.url;
 						this.router.navigate([path]);
 					},
