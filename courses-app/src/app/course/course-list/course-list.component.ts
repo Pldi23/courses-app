@@ -1,10 +1,11 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { of, BehaviorSubject, Observable } from 'rxjs';
-import {catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap} from 'rxjs/operators';
-import Swal from 'sweetalert2';
-import { CourseItem } from '../course-item';
-import { CourseItemsService } from '../course-items.service';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, map, switchMap} from 'rxjs/operators';
+import {DeleteCourse, GetList} from '../../shared/store/action/course.actions';
+import {selectCourseState, IAppState} from '../../shared/store/app.state';
+import {ICourseState} from '../../shared/store/reduce/course.reducer';
+import {CourseItem} from '../course-item';
 
 @Component({
 	selector: 'app-courses-list',
@@ -13,41 +14,35 @@ import { CourseItemsService } from '../course-items.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseListComponent implements OnInit {
-
+	public getState: Observable<ICourseState>;
 	public coursesList$: Observable<CourseItem[]>;
-	@Input() public searchText: string;
-	public arrLength: number = 0;
-	public state: BehaviorSubject<any> = new BehaviorSubject({
+	@Input() public searchText: string = '';
+	public message: string;
+	public searchState: BehaviorSubject<any> = new BehaviorSubject({
 		count: DEFAULT_LIST_SIZE,
 		isSearch: false,
 		text: '',
 	});
 
-	constructor(private readonly courseService: CourseItemsService) {
+	constructor(private readonly store: Store<IAppState>) {
 	}
 
 	public ngOnInit(): void {
-		this.coursesList$ = this.state.pipe(
+		this.coursesList$ = this.searchState.pipe(
 			filter((state: any): boolean => !state.isSearch || state.text.length > FILTER_LIMIT),
 			debounceTime(DEBOUNCE_TIME),
 			distinctUntilChanged(),
 			switchMap((state: any): Observable<CourseItem[]> => {
-				return this.courseService
-						.fetch(0, state.count, state.text)
-						.pipe(this.setArrLength(), this.handleError());
+				return this.getCourses(state.count);
 			}));
 	}
 
-	public fetchMore(): void {
-		this.state.next({
-			count: this.arrLength + DEFAULT_LIST_SIZE,
-			isSearch: this.searchText !== undefined,
-			text: this.searchText,
-		});
+	public fetchMore(count: number): void {
+		this.getCourses(count);
 	}
 
 	public search(): void {
-		this.state.next({
+		this.searchState.next({
 			count: DEFAULT_LIST_SIZE,
 			isSearch: true,
 			text: this.searchText,
@@ -55,27 +50,26 @@ export class CourseListComponent implements OnInit {
 	}
 
 	public handleDelete(course: CourseItem): void {
-		this.courseService.remove(course)
-			.pipe(
-				map(
-					(): any => this.state.next({
-						count: this.arrLength,
-						isSearch: this.searchText !== undefined,
-						text: this.searchText,
-					}))).subscribe();
+		const payload: any = {
+			course: course,
+			searchText: this.searchText,
+			count: DEFAULT_LIST_SIZE,
+		};
+		this.store.dispatch(new DeleteCourse(payload));
 	}
 
-	private handleError(): any {
-		return catchError((err: HttpErrorResponse): Observable<CourseItem[]> => {
-			Swal.fire(`Error`, err.message, 'error');
-			return of([]);
-		});
-	}
-
-	private setArrLength(): any {
-		return tap((val: CourseItem[]): void => {
-			this.arrLength = val.length;
-		});
+	private getCourses(length: number): Observable<CourseItem[]> {
+		const payload: any = {
+			searchText: this.searchText,
+			count: length,
+		};
+		this.store.dispatch(new GetList(payload));
+		this.getState = this.store.select(selectCourseState);
+		return  this.getState.pipe(
+			map((state: ICourseState): CourseItem[] => {
+				return state.courses;
+			}),
+		);
 	}
 }
 

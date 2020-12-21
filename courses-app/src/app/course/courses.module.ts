@@ -10,7 +10,9 @@ import { SharedModule } from '../shared/shared.module';
 import { ActionCourseItemComponent } from './action-course-item/action-course-item.component';
 import { AuthorsInputComponent } from './action-course-item/authors-input/authors-input.component';
 import { DateInputComponent } from './action-course-item/date-input/date-input.component';
+import { DescriptionInputComponent } from './action-course-item/description-input/description-input.component';
 import { DurationInputComponent } from './action-course-item/duration-input/duration-input.component';
+import { NameInputComponent } from './action-course-item/name-input/name-input.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseRoutingModule } from './course-routing.module';
@@ -28,6 +30,8 @@ import { CourseRoutingModule } from './course-routing.module';
 		DurationInputComponent,
 		AuthorsInputComponent,
 		AuthorNamePipe,
+		DescriptionInputComponent,
+		NameInputComponent,
 	],
   	exports: [
 		CourseListComponent,

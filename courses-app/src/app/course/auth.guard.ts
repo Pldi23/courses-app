@@ -1,34 +1,39 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
 	ActivatedRouteSnapshot,
 	CanActivate,
-	NavigationExtras,
 	Router,
 	RouterStateSnapshot,
 } from '@angular/router';
-import { of, Observable } from 'rxjs';
-import { AuthService } from '../shared/auth.service';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {LoginRequired} from '../shared/store/action/auth.actions';
+import {selectAuthState, IAppState} from '../shared/store/app.state';
+import {IState} from '../shared/store/reduce/auth.reducers';
 
 @Injectable({
-  	providedIn: 'root',
+	providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-	private routeURL: string;
-	constructor(private readonly authService: AuthService,
+	private readonly routeURL: string;
+
+	constructor(private readonly store: Store<IAppState>,
 				private readonly router: Router) {
 		this.routeURL = this.router.url;
 	}
-  	public canActivate(
-  		route: ActivatedRouteSnapshot,
+
+	public canActivate(
+		route: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean> {
-		if (!this.authService.isAuthenticated() && this.routeURL !== '/login') {
-			this.routeURL = '/login';
-			const navigationExtras: NavigationExtras = {state: {data: 'Please login to have an access to requested page', route: state.url}};
-			this.router.navigate(['/login'], navigationExtras);
-			return of(false);
-		} else {
-			this.routeURL = this.router.url;
-			return of(true);
-		}
+		return this.store.select(selectAuthState).pipe(
+			map((state: IState): boolean => {
+				if (!state.isAuthenticated && this.routeURL !== '/login') {
+					this.store.dispatch(new LoginRequired({}));
+					return false;
+				}
+				return true;
+			}),
+		);
 	}
 }

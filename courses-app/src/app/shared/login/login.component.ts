@@ -1,56 +1,38 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Navigation, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
-import { TOKEN, USER_NAME } from '../../constant';
-import { AuthService } from '../auth.service';
-import { HeaderBehaviorService } from '../header/header-behavior.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription} from 'rxjs';
+import { LogIn } from '../store/action/auth.actions';
+import { selectAuthState, IAppState } from '../store/app.state';
+import { IState } from '../store/reduce/auth.reducers';
 
 @Component({
   	selector: 'app-login',
   	templateUrl: './login.component.html',
   	styleUrls: ['./login.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit, OnDestroy {
 	@Input() public userName: string;
 	@Input() public password: string;
-	public data: string;
-	public url: string;
 	public subs: Subscription;
+	public getState: Observable<any>;
+	public errorMessage: string | null;
 
-	constructor(private readonly authService: AuthService,
-				private readonly router: Router,
-				private readonly headerService: HeaderBehaviorService) {
-	}
+	constructor(private readonly store: Store<IAppState>) {}
 
 	public ngOnInit(): void {
-		const navigation: Navigation = this.router.getCurrentNavigation();
-		if (navigation !== null) {
-			const state: any = navigation.extras.state as { data: string, route: string };
-			if (state !== undefined) {
-				this.data = state.data;
-				this.url = state.route;
-			}
-		}
+		this.getState = this.store.select(selectAuthState);
+		this.subs = this.getState.subscribe((state: IState): void => {
+			this.errorMessage = state.errorMessage;
+		});
 	}
 
 	public login(): void {
 		if (this.userName !== undefined && this.password !== undefined) {
-			this.subs = this.authService.login(this.userName, this.password)
-				.subscribe((data: any): any => {
-						localStorage.setItem(TOKEN, data.token);
-						localStorage.setItem(USER_NAME, this.userName);
-						this.headerService.setRefresh(true);
-						const path: string = this.url == null ? '/courses' : this.url;
-						this.router.navigate([path]);
-					},
-					(error: HttpErrorResponse): void => {
-						if (error.status === 401) {
-							Swal.fire('Bad credentials', 'Please check login and password', 'error');
-						}
-					});
+			const payload: any = {
+				username: this.userName,
+				password: this.password,
+			};
+			this.store.dispatch(new LogIn(payload));
 		}
 	}
 

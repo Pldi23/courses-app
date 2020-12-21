@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import {TOKEN} from '../../constant';
-import { AuthService } from '../auth.service';
-import {UserEntity} from '../user-entity';
-import {HeaderBehaviorService} from './header-behavior.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { LogOut } from '../store/action/auth.actions';
+import { selectAuthState, IAppState } from '../store/app.state';
+import { IState } from '../store/reduce/auth.reducers';
+import { UserEntity } from '../user-entity';
 
 @Component({
   	selector: 'app-header',
@@ -11,32 +12,31 @@ import {HeaderBehaviorService} from './header-behavior.service';
   	styleUrls: ['./header.component.css'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 	public user: UserEntity;
 	public isAuthenticated: boolean;
+	public getState: Observable<IState>;
+	private sub: Subscription;
 
-  	constructor(private readonly authService: AuthService,
-				private readonly ref: ChangeDetectorRef,
-				private readonly router: Router,
-				private readonly headerService: HeaderBehaviorService) {
+  	constructor(private readonly changeDetectorRef: ChangeDetectorRef,
+				private readonly store: Store<IAppState>) {
 	}
 
   	public ngOnInit(): void {
-  		this.headerService.getRefresh().subscribe((value: boolean): void => {
-  			if (value && localStorage.getItem(TOKEN)) {
-  				this.authService.getUserInfo().subscribe((user: UserEntity): void => {
-  					this.user = user;
-  					this.isAuthenticated = this.authService.isAuthenticated();
-  					this.ref.markForCheck();
-  				});
-  			}
-  		});
-  		this.headerService.setRefresh(true);
+		this.getState = this.store.select(selectAuthState);
+		this.sub = this.getState.subscribe((state: IState): void => {
+			this.isAuthenticated = state.isAuthenticated;
+			this.user = state.user;
+			this.changeDetectorRef.markForCheck();
+		});
   	}
 
   	public logout(): void {
-  		this.headerService.setRefresh(false);
-  		this.authService.logout();
+  		this.store.dispatch(new LogOut({}));
+	}
+
+	public ngOnDestroy(): void {
+  		this.sub.unsubscribe();
 	}
 
 }

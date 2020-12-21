@@ -1,7 +1,7 @@
 <div class="login-container">
 	<div class="login-content">
-		<div *ngIf="data != null" class="alert alert-warning fontAwesome" role="alert">
-		<span><i class="fa fas fa-shield-alt"></i> {{data}}</span>
+		<div *ngIf="errorMessage != null" class="alert alert-warning fontAwesome" role="alert">
+		<span><i class="fa fas fa-shield-alt"></i> {{errorMessage}}</span>
 		</div>
 		<h1 class="login-title">Login</h1>
 		<span class="float-left">E-mail</span>

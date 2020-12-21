@@ -3,17 +3,9 @@
 <app-breadcrumbs [title]="data.name"></app-breadcrumbs>
 <div class="course-container">
 	<div class="course-content">
-		<label>
-			<span class="float-left">Title:</span>
-			<br>
-			<input [(ngModel)]="data.name" type="text" placeholder="title">
-		</label>
+		<app-name-input [name]="data.name" (loadName)="loadName($event, data)"></app-name-input>
 		<br>
-		<label>
-			<span class="float-left">Description:</span>
-			<br>
-			<textarea id="description" [(ngModel)]="data.description" type="text" placeholder="description"></textarea>
-		</label>
+		<app-description-input [description]="data.description" (loadDesc)="loadDescription($event, data)"></app-description-input>
 		<br>
 		<app-date-input [creationDate]="data.date" (loadDate)="loadDate($event, data)"></app-date-input>
 		<br>

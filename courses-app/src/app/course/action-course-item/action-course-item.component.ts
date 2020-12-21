@@ -1,12 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CancelCourseItem, GetCourse, ModifyCourseItem, SaveCourse } from '../../shared/store/action/courseitem.actions';
+import { selectCourseItemState, IAppState } from '../../shared/store/app.state';
+import { ICourseItemState } from '../../shared/store/reduce/courseitem.reducer';
 import { AuthorItem } from '../author-item';
 import { CourseItem } from '../course-item';
-import { CourseItemsService } from '../course-items.service';
 
 @Component({
 	selector: 'app-add-edit-course',
@@ -16,76 +17,54 @@ import { CourseItemsService } from '../course-items.service';
 })
 export class ActionCourseItemComponent implements OnInit {
 	@Input() public course$: Observable<CourseItem>;
+	@Input() public name: string;
 
-	constructor(private readonly router: Router,
-				private readonly courseService: CourseItemsService,
+	constructor(private readonly store: Store<IAppState>,
 				private readonly route: ActivatedRoute) {
-	}
-
-	private static isNumber(value: string | number): boolean {
-		return ((value != null) &&
-			(value !== '') &&
-			!isNaN(Number(value.toString())));
 	}
 
 	public ngOnInit(): void {
 		const id: string = this.route.snapshot.paramMap.get('id');
-		if (!ActionCourseItemComponent.isNumber(id)) {
-			this.course$ = of(new CourseItem());
-		} else {
-			this.course$ = this.courseService.getById(Number(id))
-				.pipe(
-					tap((data: CourseItem): CourseItem => data),
-					catchError((err: HttpErrorResponse): CourseItem => {
-						this.router.navigate(['/courses']);
-						Swal.fire(`Error`, err.message, 'error');
-						return new CourseItem();
-					}));
-		}
+		this.store.dispatch(new GetCourse({id: id}));
+		this.course$ = this.store.select(selectCourseItemState).pipe(
+			map((state: ICourseItemState): CourseItem => state.course));
 	}
 
 	public cancel(): void {
-		this.router.navigate(['/courses']);
+		this.store.dispatch(new CancelCourseItem({}));
 	}
 
 	public save(course?: CourseItem): void {
-		console.log(course);
-		if (course.id === undefined) {
-			this.course$ = this.courseService.create(course)
-				.pipe(
-					tap(this.handleUpsert(course, 'created')),
-					catchError(this.handleError(course)));
-		} else {
-			this.course$ = this.courseService.update(course, course.id)
-				.pipe(
-					tap(this.handleUpsert(course, 'updated')),
-					catchError(this.handleError(course)));
-		}
+		this.store.dispatch(new SaveCourse(course));
 	}
 
-	private handleUpsert(course: CourseItem, info: string): any {
-		return (): any => {
-			this.router.navigate(['/courses']);
-			Swal.fire(`${course.name}`, `Successfully ${info}!`, 'success');
-		};
+	public loadName(name: string, course: CourseItem): void {
+		const copy: CourseItem = Object.assign({}, course);
+		copy.name = name;
+		this.store.dispatch(new ModifyCourseItem({ course: copy }));
 	}
 
-	private handleError(course: CourseItem): any {
-		return (err: HttpErrorResponse): CourseItem => {
-			Swal.fire(`Could not save: ${course.name}`, err.message, 'error');
-			return course;
-		};
+	public loadDescription(description: string, course: CourseItem): void {
+		const copy: CourseItem = Object.assign({}, course);
+		copy.description = description;
+		this.store.dispatch(new ModifyCourseItem({ course: copy }));
 	}
 
 	public loadDuration(duration: number, course: CourseItem): void {
-		course.length = duration;
+		const copy: CourseItem = Object.assign({}, course);
+		copy.length = duration;
+		this.store.dispatch(new ModifyCourseItem({ course: copy }));
 	}
 
 	public loadDate(date: Date, course: CourseItem): void {
-		course.date = date;
+		const copy: CourseItem = Object.assign({}, course);
+		copy.date = date;
+		this.store.dispatch(new ModifyCourseItem({ course: copy }));
 	}
 
 	public loadAuthors(authors: AuthorItem[], course: CourseItem): void {
-		course.authors = authors;
+		const copy: CourseItem = Object.assign({}, course);
+		copy.authors = authors;
+		this.store.dispatch(new ModifyCourseItem({ course: copy }));
 	}
 }

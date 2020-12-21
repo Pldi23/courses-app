@@ -19,7 +19,7 @@
 				No Data. Feel free to add new course
 			</div>
 			<ng-template #loadMore>
-				<div *ngFor="let courseItem of values | orderByCreationDate">
+				<div *ngFor="let courseItem of values">
 					<app-courses-item id="itemId" [courseItem]="courseItem"
 									  (delete)="handleDelete($event)"></app-courses-item>
 					<br>
@@ -27,7 +27,7 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="col text-md-center">
-							<button type="button" class="btn btn-link" id="loadMoreButton" (click)="fetchMore()">
+							<button type="button" class="btn btn-link" id="loadMoreButton" (click)="fetchMore(values.length + 3)">
 								Load more
 							</button>
 						</div>
