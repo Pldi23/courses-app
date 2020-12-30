@@ -9,7 +9,7 @@ import {
 	Output,
 	Type,
 } from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
+import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AuthorItem} from '../../author-item';
 import {ValidateExistingAuthor} from '../validator/authors-validator.directive';
@@ -52,15 +52,17 @@ export class AuthorTagComponent implements ControlValueAccessor, OnInit, OnDestr
 	}
 
 	public suggest(): void {
-		if (this.form.controls.tag.value === null || this.form.controls.tag.value === '') {
-			this.suggestions = [];
-		} else {
-			this.suggestions = this.allAuthors
-				.map((value: AuthorItem): FormGroup => this.formBuilder.group({
-					tag: new FormControl(value.name),
-				}))
-				.filter((fg: FormGroup): boolean =>
-					fg.controls.tag.value.toLowerCase().startsWith(this.form.controls.tag.value.toLowerCase()));
+		if (this.isNew) {
+			if (this.form.controls.tag.value === null || this.form.controls.tag.value === '') {
+				this.suggestions = [];
+			} else {
+				this.suggestions = this.allAuthors
+					.map((value: AuthorItem): FormGroup => this.formBuilder.group({
+						tag: new FormControl(value.name),
+					}))
+					.filter((fg: FormGroup): boolean =>
+						fg.controls.tag.value.toLowerCase().startsWith(this.form.controls.tag.value.toLowerCase()));
+			}
 		}
 	}
 

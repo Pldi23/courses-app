@@ -1,5 +1,6 @@
 <form [formGroup]="form" class="{{isNew ? 'suggestion-form' : 'tag-form'}}">
-	<input formControlName="tag" (keyup)="suggest(); dirtyOrTouched.emit(form.controls.tag.touched || form.controls.tag.dirty)">
+	<input formControlName="tag" (keyup)="suggest(); dirtyOrTouched.emit(form.controls.tag.touched || form.controls.tag.dirty)"
+		   [readOnly]="!isNew">
 	<ng-container *ngIf="!isNew">
 		<button (click)="delete.emit(form); dirtyOrTouched.emit(true)">&#xF00d;</button>
 	</ng-container>
