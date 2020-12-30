@@ -1,9 +1,17 @@
+<ng-container [formGroup]="formGroup" *ngIf="(allAuthors$ | async) as allAuthors">
 <label>
-	<span class="float-left">[*Todo]Authors:</span>
+	<span class="float-left">Authors:</span>
 	<br>
-	<div *ngFor="let author of authors"
-		 [(ngModel)]="authors"
-		 (ngModelChange)="loadAuthors.emit($event)" ngDefaultControl>
-		<p>{{author | authorName}}</p>
+	<div formArrayName="authors">
+		<div *ngFor="let author of formGroup.controls['authors']['controls']; let i = index">
+			<app-author-tag formControlName="{{i}}" [isNew]="false" (delete)="removeAuthor(i)" (dirtyOrTouched)="isDirtyOrTouched($event)"></app-author-tag>
+		</div>
+		<div class="validation-error"
+			 *ngIf="!formGroup.controls.authors?.valid && isDirtyOrTouchedInputElement">
+			{{formGroup.controls.authors?.errors?.authorsError}}
+		</div>
+		<app-author-tag [isNew]="true" (add)="addAuthorForm($event)" [allAuthors]="allAuthors" (dirtyOrTouched)="isDirtyOrTouched($event)">
+		</app-author-tag>
 	</div>
 </label>
+</ng-container>

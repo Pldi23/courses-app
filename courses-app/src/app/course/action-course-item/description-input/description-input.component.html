@@ -1,5 +1,16 @@
+<ng-container [formGroup]="formGroup">
 <label>
 	<span class="float-left">Description:</span>
+	<div
+		*ngIf="!formGroup.controls.descriptionControl?.valid && (formGroup.controls.descriptionControl?.dirty
+    || formGroup.controls.descriptionControl?.touched)">
+		<div class="validation-error">
+			Course Description required and should be less then 500 symbols
+		</div>
+	</div>
 	<br>
-	<textarea id="description" [(ngModel)]="description" (ngModelChange)="loadDesc.emit(description)" type="text" placeholder="description"></textarea>
+	<textarea class="input-location" formControlName="descriptionControl" id="description" type="text" placeholder="description"
+			  [ngClass]="{'input-error': !formGroup.controls.descriptionControl?.valid && (formGroup.controls.descriptionControl?.dirty
+    || formGroup.controls.descriptionControl?.touched)}"></textarea>
 </label>
+</ng-container>

@@ -1,5 +1,15 @@
+<ng-container [formGroup]="formGroup">
 <label>
 	<span class="float-left">Duration:</span>
+	<div class="validation-error"
+		*ngIf="!formGroup.controls.durationControl?.valid && (formGroup.controls.durationControl?.dirty
+    || formGroup.controls.durationControl?.touched)">
+			Course duration required and should be a number
+	</div>
 	<br>
-	<input [(ngModel)]="duration" (ngModelChange)="loadLength.emit(duration)" type="number" placeholder="duration" class="input-location"> <span class="span-location" *ngIf="isVisible()">{{duration | courseDuration}}</span>
+	<input class="input-location" formControlName="durationControl" type="text"
+		   [ngClass]="{'input-error': !formGroup.controls.durationControl?.valid && (formGroup.controls.durationControl?.dirty
+    || formGroup.controls.durationControl?.touched)}">
+	<span class="span-location" *ngIf="isVisible()">{{formGroup.controls.durationControl?.value | courseDuration}}</span>
 </label>
+</ng-container>

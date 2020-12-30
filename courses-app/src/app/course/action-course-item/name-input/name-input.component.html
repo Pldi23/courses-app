@@ -1,5 +1,19 @@
+<ng-container [formGroup]="formGroup">
 <label>
 	<span class="float-left">Title:</span>
+	<div
+		*ngIf="!formGroup.controls.nameControl?.valid && (formGroup.controls.nameControl?.dirty
+    || formGroup.controls.nameControl?.touched)">
+		<div class="validation-error">
+		Course Name required and should be less then 50 symbols
+		</div>
+	</div>
 	<br>
-	<input [(ngModel)]="name" (ngModelChange)="loadName.emit(name)" type="text" placeholder="title">
+	<input formControlName="nameControl"
+		   type="text"
+		   placeholder="title"
+		   class="input-location"
+		   [ngClass]="{'input-error': !formGroup.controls.nameControl?.valid && (formGroup.controls.nameControl?.dirty
+	|| formGroup.controls.nameControl?.touched)}">
 </label>
+</ng-container>

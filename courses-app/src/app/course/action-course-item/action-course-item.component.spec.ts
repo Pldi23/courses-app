@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { ICourseItemState } from '../../shared/store/reduce/courseitem.reducer';
@@ -13,7 +14,7 @@ describe('ActionCourseItemComponent', (): void => {
 
   	beforeEach((): void => {
 		TestBed.configureTestingModule({
-			imports: [ RouterTestingModule ],
+			imports: [ RouterTestingModule, ReactiveFormsModule, FormsModule ],
 			declarations: [ ActionCourseItemComponent ],
 			providers: [provideMockStore({ initialState })],
 		})

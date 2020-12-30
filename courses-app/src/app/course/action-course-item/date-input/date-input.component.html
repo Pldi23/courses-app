@@ -1,6 +1,16 @@
+<ng-container [formGroup]="formGroup">
 <label>
 	<span class="float-left">Date:</span>
+	<div
+		*ngIf="!formGroup.controls.dateControl?.valid && (formGroup.controls.dateControl?.dirty
+    || formGroup.controls.dateControl?.touched)">
+		<div class="validation-error">
+			Course Date required and in format 'dd/mm/yyyy'
+		</div>
+	</div>
 	<br>
-	<input class="input-location" [ngModel]="creationDate | date:'yyyy-MM-dd'"
-		   (ngModelChange)="loadDate.emit($event)" type="date" placeholder="creation date">
+	<input type="text" formControlName="dateControl" class="input-location" placeholder="creation date"
+		   [ngClass]="{'input-error': !formGroup.controls.dateControl?.valid && (formGroup.controls.dateControl?.dirty
+    || formGroup.controls.dateControl?.touched)}">
 </label>
+</ng-container>

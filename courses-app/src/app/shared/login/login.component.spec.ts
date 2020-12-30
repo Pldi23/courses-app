@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormsModule} from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { IState } from '../store/reduce/auth.reducers';
@@ -16,7 +17,7 @@ describe('LoginComponent', (): void => {
 
 	beforeEach((): void => {
 		TestBed.configureTestingModule({
-			imports: [ RouterTestingModule ],
+			imports: [ RouterTestingModule, FormsModule ],
 			declarations: [ LoginComponent ],
 			providers: [provideMockStore({ initialState })],
 		})

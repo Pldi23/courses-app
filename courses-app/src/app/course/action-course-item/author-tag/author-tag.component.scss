@@ -1,0 +1,56 @@
+.tag-form {
+	display:flex;
+	flex-direction:row;
+	background: #fff4c2;
+	border-radius: 10px;
+	border:1px solid grey;
+	padding:2px;
+	width: 200px;
+	input {
+		flex-grow:2;
+		border:none;
+	}
+	input:focus {
+		outline: none;
+	}
+	button {
+		border:1px solid gray;
+		background: #bbbbbb;
+		border-radius: 10px;
+		font-family: 'SourceSansPro-Regular', FontAwesome, sans-serif;
+		color: black;
+	}
+}
+
+.suggestion-form {
+	input {
+		width: 90%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		float: left;
+		border-radius: 4px;
+		border: 1px solid #ccc;
+	}
+	button {
+		border:1px solid gray;
+		padding: 12px 20px;
+		margin: 8px 0;
+		background: #fff4c2;
+		font-family: 'SourceSansPro-Regular', FontAwesome, sans-serif;
+		color: black;
+		border-radius: 30px;
+	}
+	button:hover {
+		background-color: lightgreen;
+	}
+	button:disabled {
+		background-color: gray;
+	}
+	a {
+		float: left;
+	}
+}
+
+.validation-error {
+	color: red;
+}

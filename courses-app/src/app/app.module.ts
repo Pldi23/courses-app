@@ -14,9 +14,11 @@ import { TokenInterceptor } from './shared/interceptor/token-interceptor';
 import { UrlInterceptor } from './shared/interceptor/url-interceptor';
 import { SharedModule } from './shared/shared.module';
 import { AuthEffects } from './shared/store/effect/auth.effects';
+import {AuthorEffects} from './shared/store/effect/author.effects';
 import { CourseEffects } from './shared/store/effect/course.effects';
 import { CourseItemEffects } from './shared/store/effect/courseitem.effects';
 import { authReducer } from './shared/store/reduce/auth.reducers';
+import { authorsReducer } from './shared/store/reduce/author.reducer';
 import { coursesReducer } from './shared/store/reduce/course.reducer';
 import { courseItemReducer } from './shared/store/reduce/courseitem.reducer';
 
@@ -30,8 +32,8 @@ import { courseItemReducer } from './shared/store/reduce/courseitem.reducer';
 		AppRoutingModule,
 		SharedModule,
 		CoursesModule,
-		StoreModule.forRoot({ auth: authReducer, course: coursesReducer, courseItem: courseItemReducer }),
-		EffectsModule.forRoot([AuthEffects, CourseEffects, CourseItemEffects]),
+		StoreModule.forRoot({ auth: authReducer, course: coursesReducer, courseItem: courseItemReducer, author: authorsReducer }),
+		EffectsModule.forRoot([AuthEffects, CourseEffects, CourseItemEffects, AuthorEffects]),
 		StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
 	],
 	providers: [

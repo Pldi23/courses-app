@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CourseCreationDateBorderDirective } from '../directive/course-creation-date-border.directive';
 import { AuthorNamePipe } from '../pipe/author/author-name.pipe';
 import { CourseDurationPipe } from '../pipe/course-duration/course-duration.pipe';
@@ -8,11 +8,15 @@ import { OrderByCreationDatePipe } from '../pipe/order/order-by-creation-date.pi
 import { ModalComponent } from '../shared/modal/modal.component';
 import { SharedModule } from '../shared/shared.module';
 import { ActionCourseItemComponent } from './action-course-item/action-course-item.component';
+import { AuthorTagComponent } from './action-course-item/author-tag/author-tag.component';
 import { AuthorsInputComponent } from './action-course-item/authors-input/authors-input.component';
 import { DateInputComponent } from './action-course-item/date-input/date-input.component';
 import { DescriptionInputComponent } from './action-course-item/description-input/description-input.component';
 import { DurationInputComponent } from './action-course-item/duration-input/duration-input.component';
 import { NameInputComponent } from './action-course-item/name-input/name-input.component';
+import { AuthorsValidatorDirective } from './action-course-item/validator/authors-validator.directive';
+import { CreationDateValidatorDirective } from './action-course-item/validator/creation-date-validator.directive';
+import { DurationValidatorDirective } from './action-course-item/validator/duration-validator.directive';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseRoutingModule } from './course-routing.module';
@@ -32,6 +36,10 @@ import { CourseRoutingModule } from './course-routing.module';
 		AuthorNamePipe,
 		DescriptionInputComponent,
 		NameInputComponent,
+		DurationValidatorDirective,
+		CreationDateValidatorDirective,
+		AuthorsValidatorDirective,
+		AuthorTagComponent,
 	],
   	exports: [
 		CourseListComponent,
@@ -39,12 +47,15 @@ import { CourseRoutingModule } from './course-routing.module';
 		CourseDurationPipe,
 		OrderByCreationDatePipe,
 		AuthorNamePipe,
+		DurationValidatorDirective,
+		AuthorsValidatorDirective,
   	],
 	imports: [
 		CommonModule,
 		FormsModule,
 		SharedModule,
 		CourseRoutingModule,
+		ReactiveFormsModule,
 	],
 })
 export class CoursesModule { }

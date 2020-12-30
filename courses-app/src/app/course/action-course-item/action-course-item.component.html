@@ -3,20 +3,22 @@
 <app-breadcrumbs [title]="data.name"></app-breadcrumbs>
 <div class="course-container">
 	<div class="course-content">
-		<app-name-input [name]="data.name" (loadName)="loadName($event, data)"></app-name-input>
-		<br>
-		<app-description-input [description]="data.description" (loadDesc)="loadDescription($event, data)"></app-description-input>
-		<br>
-		<app-date-input [creationDate]="data.date" (loadDate)="loadDate($event, data)"></app-date-input>
-		<br>
-		<app-duration-input [duration]="data.length" (loadLength)="loadDuration($event, data)"></app-duration-input>
-		<br>
-		<app-authors-input [authors]="data.authors" (loadAuthors)="loadAuthors($event, data)"></app-authors-input>
-		<div class="row">
-			<input id="save" type="submit" value="Save" (click)="save(data)">
-			&nbsp;
-			<input id="cancel" type="submit" value="Cancel" (click)="cancel()">
-		</div>
+		<form [formGroup]="courseForm" (ngSubmit)="onFormSubmit(data.id)">
+			<app-name-input [formControl]="courseForm.controls['nameControl']" (getNameStatusChange)="setNameValid($event)"></app-name-input>
+			<br>
+			<app-description-input [formControl]="courseForm.controls['descriptionControl']" (getDescriptionStatusChange)="setDescriptionValid($event)"></app-description-input>
+			<br>
+			<app-date-input [formControl]="courseForm.controls['dateControl']" (getDateStatusChange)="setDateValid($event)"></app-date-input>
+			<br>
+			<app-duration-input [formControl]="courseForm.controls['durationControl']" (getDurationStatusChange)="setDurationValid($event)"></app-duration-input>
+			<br>
+			<app-authors-input [formControl]="courseForm.controls['authorsControl']" (getAuthorsStatusChange)="setAuthorsValid($event)"></app-authors-input>
+			<div class="row">
+				<input id="save" type="submit" value="Save" [disabled]="!allValid()">
+				&nbsp;
+				<input id="cancel" type="submit" value="Cancel" (click)="cancel()">
+			</div>
+		</form>
 	</div>
 </div>
 </ng-container>

@@ -1,0 +1,17 @@
+<form [formGroup]="form" class="{{isNew ? 'suggestion-form' : 'tag-form'}}">
+	<input formControlName="tag" (keyup)="suggest(); dirtyOrTouched.emit(form.controls.tag.touched || form.controls.tag.dirty)">
+	<ng-container *ngIf="!isNew">
+		<button (click)="delete.emit(form); dirtyOrTouched.emit(true)">&#xF00d;</button>
+	</ng-container>
+	<ng-container *ngIf="isNew">
+		<button (click)="add.emit(form); clearSuggestions()" [disabled]="!isMatched()">&#xF067;</button>
+	</ng-container>
+	<div class="validation-error"
+		 *ngIf="!form.controls.tag?.valid">
+		{{form.controls.tag?.errors?.authorsError}}
+	</div>
+	<div *ngIf="suggestions.length">
+		<p class="tag-form" *ngFor="let suggestedForm of suggestions"
+		   (click)="add.emit(suggestedForm); clearSuggestions(); clearForm()">{{suggestedForm.controls.tag.value}}</p>
+	</div>
+</form>
