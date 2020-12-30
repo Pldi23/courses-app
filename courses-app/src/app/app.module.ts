@@ -14,7 +14,7 @@ import { TokenInterceptor } from './shared/interceptor/token-interceptor';
 import { UrlInterceptor } from './shared/interceptor/url-interceptor';
 import { SharedModule } from './shared/shared.module';
 import { AuthEffects } from './shared/store/effect/auth.effects';
-import {AuthorEffects} from './shared/store/effect/author.effects';
+import { AuthorEffects } from './shared/store/effect/author.effects';
 import { CourseEffects } from './shared/store/effect/course.effects';
 import { CourseItemEffects } from './shared/store/effect/courseitem.effects';
 import { authReducer } from './shared/store/reduce/auth.reducers';
