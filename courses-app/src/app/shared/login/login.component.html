@@ -2,31 +2,31 @@
 	<div class="login-content">
 		<form (ngSubmit)="login()" #loginForm="ngForm">
 			<div *ngIf="errorMessage != null" class="alert alert-warning fontAwesome" role="alert">
-				<span><i class="fa fas fa-shield-alt"></i> {{errorMessage}}</span>
+				<span><i class="fa fas fa-shield-alt"></i> {{errorMessage | translate}}</span>
 			</div>
 			<div class="form-group">
-				<h1 class="login-title">Login</h1>
-				<span class="float-left">E-mail</span>
-				<span class="right">*required</span>
+				<h1 class="login-title">{{ 'LOGIN.TITLE' | translate }}</h1>
+				<span class="float-left">{{ 'LOGIN.USERNAME.LABEL' | translate}}</span>
+				<span class="right">{{ 'LOGIN.LABEL.REQUIRED' | translate}}</span>
 				<input type="text" class="form-control" [(ngModel)]="userName" name="name"
-					   #name="ngModel" required placeholder="Enter login">
+					   #name="ngModel" required placeholder="{{ 'LOGIN.USERNAME.PLACEHOLDER' | translate }}">
 				<div class="form-group">
 					<div *ngIf="!name.valid && name.touched"
 						 class="alert alert-danger">
-						Name is required
+						{{ 'LOGIN.USERNAME.ERROR.ALERT' | translate }}
 					</div>
 				</div>
-				<span class="float-left">Password</span>
-				<span class="right">*required</span>
+				<span class="float-left">{{ 'LOGIN.PASSWORD.LABEL' | translate }}</span>
+				<span class="right">{{ 'LOGIN.LABEL.REQUIRED' | translate }}</span>
 				<input type="password" class="form-control" [(ngModel)]="password" #pass="ngModel" name="password" required
-					   placeholder="Enter password">
+					   placeholder="{{ 'LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
 				<div *ngIf="!pass.valid && pass.touched" class="alert alert-danger">
-					Password is required
+					{{ 'LOGIN.PASSWORD.ERROR.ALERT' | translate }}
 				</div>
 			</div>
 			<div class="or-separator"></div>
-			<a class="forget-pass-link">forget password?</a>
-			<input id="login" type="submit" value="Submit" [disabled]="!loginForm.form.valid">
+			<a class="forget-pass-link">{{ 'LOGIN.PASSWORD.FORGET' | translate }}</a>
+			<input id="login" type="submit" value="{{ 'LOGIN.SUBMIT' | translate }}" [disabled]="!loginForm.form.valid">
 		</form>
 	</div>
 </div>

@@ -32,7 +32,7 @@ export function authReducer(state: IState = initialState, action: All): IState {
 		case AuthActionTypes.LOGIN_FAILURE: {
 			return {
 				...state,
-				errorMessage: 'Incorrect username and/or password.',
+				errorMessage: 'LOGIN.FAILED',
 			};
 		}
 		case AuthActionTypes.LOGOUT: {
@@ -50,13 +50,13 @@ export function authReducer(state: IState = initialState, action: All): IState {
 		case AuthActionTypes.GET_USER_INFO_FAILURE: {
 			return {
 				...state,
-				errorMessage: 'Could not get user info',
+				errorMessage: 'LOGIN.USER.FAILED',
 			};
 		}
 		case AuthActionTypes.LOGIN_REQUIRED: {
 			return {
 				...state,
-				errorMessage: 'Please login to have an access to requested page',
+				errorMessage: 'LOGIN.ACCESS.FAILED',
 			};
 		}
 		default: {

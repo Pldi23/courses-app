@@ -4,6 +4,8 @@
 
 export const environment: any = {
   	production: false,
+	locales: ['en', 'ru'],
+	defaultLocale: 'ru',
 };
 
 /*

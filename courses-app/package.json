@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "update-locale": "ngx-translate-extract -i ./src/ -o ./src/assets/locale/{en,ru}.json --format-indentation ' '"
   },
   "private": true,
   "dependencies": {
@@ -23,20 +24,24 @@
     "@ngrx/effects": "^10.1.0",
     "@ngrx/store": "^10.1.0",
     "@ngrx/store-devtools": "^10.1.0",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "bootstrap": "^4.5.2",
     "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "sweetalert2": "^10.10.2",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@ng-select/ng-select": "5.0.14"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1001.4",
     "@angular/cli": "~10.1.4",
     "@angular/compiler-cli": "~10.1.4",
+    "@biesbjerg/ngx-translate-extract": "^7.0.3",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.11.1",
+    "@types/node": "^14.14.19",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

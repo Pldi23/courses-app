@@ -1,11 +1,11 @@
 <ng-container [formGroup]="formGroup">
 <label>
-	<span class="float-left">Date:</span>
+	<span class="float-left">{{ 'ACTION.COURSE.DATE' | translate}}</span>
 	<div
 		*ngIf="!formGroup.controls.dateControl?.valid && (formGroup.controls.dateControl?.dirty
     || formGroup.controls.dateControl?.touched)">
 		<div class="validation-error">
-			Course Date required and in format 'dd/mm/yyyy'
+			{{ 'ACTION.COURSE.VALID.DATE' | translate}}
 		</div>
 	</div>
 	<br>

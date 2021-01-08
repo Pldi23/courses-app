@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { CourseCreationDateBorderDirective } from '../directive/course-creation-date-border.directive';
 import { AuthorNamePipe } from '../pipe/author/author-name.pipe';
 import { CourseDurationPipe } from '../pipe/course-duration/course-duration.pipe';
+import { LocalizedDatePipe } from '../pipe/localized-date/localized-date.pipe';
 import { OrderByCreationDatePipe } from '../pipe/order/order-by-creation-date.pipe';
 import { ModalComponent } from '../shared/modal/modal.component';
 import { SharedModule } from '../shared/shared.module';
@@ -40,6 +42,7 @@ import { CourseRoutingModule } from './course-routing.module';
 		CreationDateValidatorDirective,
 		AuthorsValidatorDirective,
 		AuthorTagComponent,
+		LocalizedDatePipe,
 	],
   	exports: [
 		CourseListComponent,
@@ -49,6 +52,7 @@ import { CourseRoutingModule } from './course-routing.module';
 		AuthorNamePipe,
 		DurationValidatorDirective,
 		AuthorsValidatorDirective,
+		LocalizedDatePipe,
   	],
 	imports: [
 		CommonModule,
@@ -56,6 +60,7 @@ import { CourseRoutingModule } from './course-routing.module';
 		SharedModule,
 		CourseRoutingModule,
 		ReactiveFormsModule,
+		TranslateModule,
 	],
 })
 export class CoursesModule { }

@@ -6,7 +6,7 @@
 		<div class="input-group mb-3 col-3">
 			<div class="form-group">
 			<input id="searchInput" [(ngModel)]="searchText" (keyup)="search()" type="text" class="form-control fontAwesome"
-				   name="search" placeholder="&#xF002; text to search">
+				   name="search" placeholder="&#xF002; {{ 'COURSE.LIST.SEARCH.PLACEHOLDER' | translate }}">
 			</div>
 		</div>
 		</form>
@@ -14,13 +14,13 @@
 			<button routerLink="/courses/new" type="button" class="btn btn-info btn-md"><img src="/assets/plus.svg"
 																							 width="20" height="20"
 																							 alt="edit">
-				Add course
+				{{ 'COURSE.LIST.ADD' | translate }}
 			</button>
 		</div>
 		<ng-container *ngIf="(coursesList$ | async) as values">
 			<br>
 			<div *ngIf="values.length === 0; else loadMore" class="alert alert-light text-md-center" role="alert">
-				No Data. Feel free to add new course
+				{{ 'COURSE.LIST.EMPTY' | translate }}
 			</div>
 			<ng-template #loadMore>
 				<div *ngFor="let courseItem of values">
@@ -32,7 +32,7 @@
 					<div class="card-body">
 						<div class="col text-md-center">
 							<button type="button" class="btn btn-link" id="loadMoreButton" (click)="fetchMore(values.length + 3)">
-								Load more
+								{{ 'COURSE.LIST.MORE' | translate }}
 							</button>
 						</div>
 					</div>

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
 
 import { NameInputComponent } from './name-input.component';
 
@@ -9,7 +10,7 @@ describe('NameInputComponent', (): void => {
 
   	beforeEach(async (): Promise<void> => {
   		await TestBed.configureTestingModule({
-			imports: [ReactiveFormsModule, FormsModule ],
+			imports: [ReactiveFormsModule, FormsModule, TranslateModule.forRoot() ],
 			declarations: [ NameInputComponent ],
 		})
 			.compileComponents();

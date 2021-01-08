@@ -10,6 +10,11 @@ export class UrlInterceptor implements HttpInterceptor {
 	}
 
 	private getRequestForApi(request: HttpRequest<any>): HttpRequest<any> {
+		if (request.url.includes('locale')) {
+			return request.clone({
+				url: `translate${request.url}`,
+			});
+		}
 		return request.clone({
 			url: `api${request.url}`,
 		});

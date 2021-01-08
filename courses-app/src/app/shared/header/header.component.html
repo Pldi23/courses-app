@@ -2,8 +2,13 @@
 	<div class="container-fluid">
     <span>
       <app-logo></app-logo>
-      <span class="navbar-brand mb-0 h1">Video course</span>
+      <span class="navbar-brand mb-0 h1">{{ 'APP.TITLE' | translate}}</span>
     </span>
+		<ng-select [(ngModel)]="locale" [clearable]="false" (click)="onLocale(locale)">
+			<ng-option [value]="lang.locale" *ngFor="let lang of languages">
+				<img src="./assets/{{lang.image}}" width="20px" height="20px"/>
+			</ng-option>
+		</ng-select>
 		<div *ngIf="user" id="headerUserInfoSection">
 			<ul class="nav justify-content-end">
 				<li class="nav-item">
@@ -15,7 +20,7 @@
 				<li class="nav-item">
 					<a class="nav-link text-light" href="#" (click)="logout()">
 						<i class="fa fas fa-sign-out-alt"></i>
-						Log out
+						{{ 'HEADER.LOGOUT' | translate}}
 					</a>
 				</li>
 			</ul>

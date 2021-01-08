@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import {TranslateModule} from '@ngx-translate/core';
 import { OrderByCreationDatePipe } from '../../pipe/order/order-by-creation-date.pipe';
 import { ICourseState } from '../../shared/store/reduce/course.reducer';
 import { CourseListComponent } from './course-list.component';
@@ -16,6 +17,7 @@ describe('CourseListComponent', (): void => {
 
 	beforeEach((): void => {
 		TestBed.configureTestingModule({
+			imports: [TranslateModule.forRoot()],
 			declarations: [ CourseListComponent, OrderByCreationDatePipe ],
 			providers: [provideMockStore({ initialState })],
 		})

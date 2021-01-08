@@ -1,7 +1,9 @@
 import { Component, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { CourseDurationPipe } from '../../pipe/course-duration/course-duration.pipe';
+import { LocalizedDatePipe } from '../../pipe/localized-date/localized-date.pipe';
 import { CourseItem } from '../course-item';
 import { CourseItemComponent } from './course-item.component';
 
@@ -23,7 +25,8 @@ describe('CourseItemComponent', (): void => {
 
 	beforeEach(async (): Promise<void> => {
 		await TestBed.configureTestingModule({
-			declarations: [ CourseItemComponent, CourseDurationPipe ],
+			imports: [TranslateModule.forRoot()],
+			declarations: [ CourseItemComponent, CourseDurationPipe, LocalizedDatePipe ],
 			providers: [{ provide: Router, useValue: router }],
 		})
 		.compileComponents();

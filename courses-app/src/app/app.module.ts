@@ -1,13 +1,17 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import '@angular/common/locales/global/ru';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoursesModule } from './course/courses.module';
+import { MissingTranslationService } from './missing-translation-service';
 import { FilterByTitlePipe } from './pipe/filter/filter-by-title.pipe';
 import { LoaderInterceptor } from './shared/interceptor/loader-interceptor';
 import { TokenInterceptor } from './shared/interceptor/token-interceptor';
@@ -32,9 +36,23 @@ import { courseItemReducer } from './shared/store/reduce/courseitem.reducer';
 		AppRoutingModule,
 		SharedModule,
 		CoursesModule,
-		StoreModule.forRoot({ auth: authReducer, course: coursesReducer, courseItem: courseItemReducer, author: authorsReducer }),
+		StoreModule.forRoot({
+			auth: authReducer,
+			course: coursesReducer,
+			courseItem: courseItemReducer,
+			author: authorsReducer,
+		}),
 		EffectsModule.forRoot([AuthEffects, CourseEffects, CourseItemEffects, AuthorEffects]),
 		StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient],
+			},
+			missingTranslationHandler: {provide: MissingTranslationHandler, useClass: MissingTranslationService},
+			useDefaultLang: false,
+		}),
 	],
 	providers: [
 		{
@@ -56,3 +74,7 @@ import { courseItemReducer } from './shared/store/reduce/courseitem.reducer';
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
+
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+	return new TranslateHttpLoader(http, './assets/locale/', '.json');
+}

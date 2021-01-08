@@ -14,9 +14,9 @@
 			<br>
 			<app-authors-input [formControl]="courseForm.controls['authorsControl']" (getAuthorsStatusChange)="setAuthorsValid($event)"></app-authors-input>
 			<div class="row">
-				<input id="save" type="submit" value="Save" [disabled]="!allValid()">
+				<input id="save" type="submit" value="{{ 'ACTION.COURSE.SAVE' | translate}}" [disabled]="!allValid()">
 				&nbsp;
-				<input id="cancel" type="submit" value="Cancel" (click)="cancel()">
+				<input id="cancel" type="submit" value="{{ 'ACTION.COURSE.CANCEL' | translate}}" (click)="cancel()">
 			</div>
 		</form>
 	</div>

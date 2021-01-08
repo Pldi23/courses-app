@@ -1,11 +1,11 @@
 <ng-container [formGroup]="formGroup">
 <label>
-	<span class="float-left">Description:</span>
+	<span class="float-left">{{ 'ACTION.COURSE.DESCRIPTION' | translate}}</span>
 	<div
 		*ngIf="!formGroup.controls.descriptionControl?.valid && (formGroup.controls.descriptionControl?.dirty
     || formGroup.controls.descriptionControl?.touched)">
 		<div class="validation-error">
-			Course Description required and should be less then 500 symbols
+			{{ 'ACTION.COURSE.VALID.DESCRIPTION' | translate}}
 		</div>
 	</div>
 	<br>

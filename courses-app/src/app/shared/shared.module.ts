@@ -3,6 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
 import { UserInfoPipe } from '../pipe/usernfo/user-info.pipe';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { FooterComponent } from './footer/footer.component';
@@ -35,6 +37,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 		FormsModule,
 		RouterModule,
 		HttpClientModule,
+		TranslateModule,
+		NgSelectModule,
 	],
 })
 export class SharedModule { }

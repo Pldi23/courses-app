@@ -1,6 +1,6 @@
 <ng-container [formGroup]="formGroup" *ngIf="(allAuthors$ | async) as allAuthors">
 <label>
-	<span class="float-left">Authors:</span>
+	<span class="float-left">{{ 'ACTION.COURSE.AUTHORS' | translate}}</span>
 	<br>
 	<div formArrayName="authors">
 		<div *ngFor="let author of formGroup.controls['authors']['controls']; let i = index">
@@ -8,7 +8,7 @@
 		</div>
 		<div class="validation-error"
 			 *ngIf="!formGroup.controls.authors?.valid && isDirtyOrTouchedInputElement">
-			{{formGroup.controls.authors?.errors?.authorsError}}
+			{{formGroup.controls.authors?.errors?.authorsError | translate}}
 		</div>
 		<app-author-tag [isNew]="true" (add)="addAuthorForm($event)" [allAuthors]="allAuthors" (dirtyOrTouched)="isDirtyOrTouched($event)">
 		</app-author-tag>

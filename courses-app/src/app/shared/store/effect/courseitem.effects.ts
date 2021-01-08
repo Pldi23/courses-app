@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ofType, Actions, Effect} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
+import {TranslateService} from '@ngx-translate/core';
 import {of, Observable} from 'rxjs';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -19,7 +20,8 @@ import {
 @Injectable()
 export class CourseItemEffects {
 
-	constructor(private readonly actions: Actions, private readonly courseService: CourseItemsService, private readonly router: Router) {
+	constructor(private readonly actions: Actions, private readonly courseService: CourseItemsService,
+				private readonly router: Router, private readonly translateService: TranslateService) {
 	}
 
 	@Effect()
@@ -33,7 +35,7 @@ export class CourseItemEffects {
 						return new GetCourseSuccess({course: course});
 					}),
 					catchError((error: HttpErrorResponse): Observable<Action> => {
-						return of(new GetCourseFailure({message: 'Course Not Found'}));
+						return of(new GetCourseFailure({message: 'ACTION.COURSE.NOT.FOUND'}));
 					}));
 			} else {
 				return of(new GetEmptyItem({}));
@@ -69,13 +71,13 @@ export class CourseItemEffects {
 					map((course: CourseItem): Action => {
 						return new SaveCourseSuccess({course: course});
 					}),
-					catchError((error: HttpErrorResponse): Observable<Action> => of(new GetCourseFailure({message: 'Course Not Found'}))));
+					catchError((error: HttpErrorResponse): Observable<Action> => of(new GetCourseFailure({message: 'ACTION.COURSE.NOT.FOUND'}))));
 			} else {
 				return this.courseService.update(course, course.id).pipe(
 					map((course: CourseItem): Action => {
 						return new SaveCourseSuccess({course: course});
 					}),
-					catchError((error: HttpErrorResponse): Observable<Action> => of(new GetCourseFailure({message: 'Course Not Found'}))));
+					catchError((error: HttpErrorResponse): Observable<Action> => of(new GetCourseFailure({message: 'ACTION.COURSE.NOT.FOUND'}))));
 			}
 		}),
 	);
@@ -86,7 +88,10 @@ export class CourseItemEffects {
 		map((action: SaveCourseSuccess): CourseItem => action.payload.course),
 		tap((course: CourseItem): any => {
 			this.router.navigate(['/courses']);
-			Swal.fire(`${course.name}`, `Successfully saved!`, 'success');
+			this.translateService.get('ACTION.COURSE.SAVED.SUCCESS').subscribe(
+				(translations: any): any =>
+					Swal.fire(`${course.name}`, translations, 'success'),
+			);
 		}),
 	);
 

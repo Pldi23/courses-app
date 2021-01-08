@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { DurationInputComponent } from './duration-input.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {DurationInputComponent} from './duration-input.component';
 
 describe('DurationInputComponent', (): void => {
 	let component: DurationInputComponent;
@@ -8,7 +9,7 @@ describe('DurationInputComponent', (): void => {
 
   	beforeEach(async (): Promise<void> => {
   		await TestBed.configureTestingModule({
-			imports: [ReactiveFormsModule, FormsModule ],
+			imports: [ReactiveFormsModule, FormsModule, TranslateModule.forRoot() ],
 			declarations: [ DurationInputComponent ],
   		})
 			.compileComponents();

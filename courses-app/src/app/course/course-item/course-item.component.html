@@ -10,9 +10,15 @@
         </div>
         <div class="col-sm">
             <small>
-              <img src="/assets/clock.svg" width="20" height="20" alt="clock"> {{courseItem.length | courseDuration}}
+				<img src="/assets/clock.svg" width="20" height="20" alt="clock">
+				<span *ngIf="courseItem.length >= 60">
+					{{(courseItem.length - courseItem.length % 60) / 60 }}{{ 'TIME.HOURS' | translate }} {{courseItem.length % 60}}{{ 'TIME.MINUTES' | translate }}
+				</span>
+				<span *ngIf="courseItem.length < 60">
+					{{courseItem.length}}{{ 'TIME.MINUTES' | translate }}
+				</span>
               &nbsp;
-              <img src="/assets/calendar.svg" width="20" height="20" alt="calendar"> {{courseItem.date | date: 'd MMM, y'}}
+              <img src="/assets/calendar.svg" width="20" height="20" alt="calendar"> {{courseItem.date | localizedDate}}
             </small>
         </div>
       </div>
@@ -28,11 +34,11 @@
         </div>
         <div class="col-3">
           <div class="row">
-            <button type="button" class="btn btn-info btn-sm" id="editButton" (click)="edit()"><img src="/assets/edit.svg" width="20" height="20" alt="edit"> Edit
+            <button type="button" class="btn btn-info btn-sm" id="editButton" (click)="edit()"><img src="/assets/edit.svg" width="20" height="20" alt="edit"> {{ 'COURSE.ITEM.EDIT' | translate }}
             </button>
             &nbsp;
             <button type="button" class="btn btn-info btn-sm" id="deleteButton" (click)="showDialog()">
-			<img src="/assets/delete.svg" width="20" height="20" alt="delete"> Delete
+			<img src="/assets/delete.svg" width="20" height="20" alt="delete"> {{ 'COURSE.ITEM.DELETE' | translate }}
             </button>
           </div>
         </div>
@@ -41,8 +47,8 @@
   </div>
 </div>
 <app-modal [isShown]="modalIsShown">
-	<div id="modal" class="alert alert-warning" role="alert">Do you really want to delete this course?</div>
-	<button id="deleteModalButton" type="button" class="btn btn-danger" (click)="delete.emit(courseItem)">Yes</button>
+	<div id="modal" class="alert alert-warning" role="alert">{{ 'COURSE.ITEM.MODAL.ASK' | translate }}</div>
+	<button id="deleteModalButton" type="button" class="btn btn-danger" (click)="delete.emit(courseItem)">{{ 'COURSE.ITEM.YES' | translate }}</button>
 	&nbsp;
-	<button id="cancelDeleteButton" type="button" class="btn btn-info" (click)="closeDialog()">No</button>
+	<button id="cancelDeleteButton" type="button" class="btn btn-info" (click)="closeDialog()">{{ 'COURSE.ITEM.NO' | translate }}</button>
 </app-modal>

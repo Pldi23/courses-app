@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import {TranslateModule} from '@ngx-translate/core';
 import { UserInfoPipe } from '../../pipe/usernfo/user-info.pipe';
 import { IState } from '../store/reduce/auth.reducers';
 import { HeaderComponent } from './header.component';
@@ -17,7 +18,7 @@ describe('HeaderComponent', (): void => {
 
   	beforeEach((): void => {
 		TestBed.configureTestingModule({
-			imports: [ RouterTestingModule ],
+			imports: [ RouterTestingModule, TranslateModule.forRoot() ],
 			declarations: [ HeaderComponent, UserInfoPipe ],
 			providers: [provideMockStore({ initialState })],
 		})

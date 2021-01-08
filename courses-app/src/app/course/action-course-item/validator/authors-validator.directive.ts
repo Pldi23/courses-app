@@ -4,7 +4,7 @@ import {AuthorItem} from '../../author-item';
 
 export function ValidateAuthorsSize(control: AbstractControl): { [key: string]: any } | null {
 	if (control.value && control.value.length < 1) {
-		return {authorsError: 'Should be at least 1 author'};
+		return {authorsError: 'ACTION.COURSE.ERROR.AUTHORS.ONE.AUTHOR'};
 	}
 	return null;
 }
@@ -20,7 +20,7 @@ export function ValidateDuplicateAuthors(control: AbstractControl): { [key: stri
 	const hasDuplicate: boolean = authors.length !== checked.length;
 
 	if (control.value && hasDuplicate) {
-		return {authorsError: 'Duplicate authors not allowed'};
+		return {authorsError: 'ACTION.COURSE.ERROR.AUTHORS.DUPLICATE'};
 	}
 	return null;
 }
@@ -31,7 +31,7 @@ export function ValidateExistingAuthor(authors: AuthorItem[]): ValidatorFn {
 			if (control.value &&
 				authors.findIndex((a: AuthorItem): boolean =>
 					a.name === control.value.name && a.lastName === control.value.lastName) < 0) {
-				return {authorsError: `Author ${control.value} not exists`};
+				return {authorsError: 'ACTION.COURSE.ERROR.AUTHORS.NOT.EXISTS'};
 			}
 			return null;
 		}

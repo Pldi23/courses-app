@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import {TranslateModule} from '@ngx-translate/core';
 import { IAuthorState } from '../../../shared/store/reduce/author.reducer';
 import { AuthorsInputComponent } from './authors-input.component';
 
@@ -12,7 +13,7 @@ describe('AuthorsInputComponent', (): void => {
 
   	beforeEach(async (): Promise<void> => {
   		await TestBed.configureTestingModule({
-			imports: [ReactiveFormsModule, FormsModule],
+			imports: [ReactiveFormsModule, FormsModule,TranslateModule.forRoot()],
 			declarations: [ AuthorsInputComponent ],
 			providers: [provideMockStore({ initialState })],
 		})

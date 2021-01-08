@@ -1,10 +1,10 @@
 <ng-container [formGroup]="formGroup">
 <label>
-	<span class="float-left">Duration:</span>
+	<span class="float-left">{{ 'ACTION.COURSE.DURATION' | translate}}</span>
 	<div class="validation-error"
 		*ngIf="!formGroup.controls.durationControl?.valid && (formGroup.controls.durationControl?.dirty
     || formGroup.controls.durationControl?.touched)">
-			Course duration required and should be a number
+		{{ 'ACTION.COURSE.VALID.DURATION' | translate}}
 	</div>
 	<br>
 	<input class="input-location" formControlName="durationControl" type="text"
